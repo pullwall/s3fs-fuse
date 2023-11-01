@@ -2896,6 +2896,33 @@ static int s3fs_open(const char* _path, struct fuse_file_info* fi)
     return 0;
 }
 
+#define CHUNK_SIZE 32 * 1024 * 1024 // 32MB
+#define CACHE_SIZE 5
+
+std::list<std::pair<off_t, std::vector<char>>> cache;
+std::unordered_map<off_t, decltype(cache)::iterator> cache_map;
+
+void add_to_cache(off_t offset, const std::vector<char>& data) {
+    cache.push_front({offset, data});
+    cache_map[offset] = cache.begin();
+
+    if (cache.size() > CACHE_SIZE) {
+        cache_map.erase(cache.back().first);
+        cache.pop_back();
+    }
+}
+
+std::vector<char>* get_from_cache(off_t offset) {
+    auto it = cache_map.find(offset);
+    if (it == cache_map.end()) {
+        return nullptr;
+    }
+
+    // Move the accessed block to the front of the cache
+    cache.splice(cache.begin(), cache, it->second);
+    return &it->second->second;
+}
+
 static int s3fs_read(const char* _path, char* buf, size_t size, off_t offset, struct fuse_file_info* fi)
 {
     WTF8_ENCODE(path)
@@ -2917,8 +2944,21 @@ static int s3fs_read(const char* _path, char* buf, size_t size, off_t offset, st
         return 0;
     }
 
-    if(0 > (res = ent->Read(static_cast<int>(fi->fh), buf, offset, size, false))){
-        S3FS_PRN_WARN("failed to read file(%s). result=%zd", path, res);
+    // Calculate the chunk range
+    off_t chunk_start = (offset / CHUNK_SIZE) * CHUNK_SIZE;
+    off_t chunk_end = std::min(chunk_start + CHUNK_SIZE, realsize); // Adjust the end of the chunk if it exceeds the file size
+
+    // Read the chunk
+    std::vector<char>* cached_data = get_from_cache(chunk_start);
+    if (cached_data) {
+        memcpy(buf, cached_data->data(), cached_data->size());
+        res = cached_data->size();
+    } else {
+        if(0 > (res = ent->Read(static_cast<int>(fi->fh), buf, chunk_start, chunk_end - chunk_start, false))){
+            S3FS_PRN_WARN("failed to read file(%s). result=%zd", path, res);
+        } else {
+            add_to_cache(chunk_start, std::vector<char>(buf, buf + res));
+        }
     }
 
     return static_cast<int>(res);
@@ -2938,7 +2978,13 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
         return -EIO;
     }
 
-    if(0 > (res = ent->Write(static_cast<int>(fi->fh), buf, offset, size))){
+    // Calculate the chunk range
+    off_t chunk_start = (offset / CHUNK_SIZE) * CHUNK_SIZE;
+    off_t chunk_end = chunk_start + std::min(CHUNK_SIZE, size); // Adjust the end of the chunk if it exceeds the size of the data to be written
+
+    // Write the chunk
+    add_to_cache(chunk_start, std::vector<char>(buf, buf + size));
+    if(0 > (res = ent->Write(static_cast<int>(fi->fh), buf, chunk_start, chunk_end - chunk_start))){
         S3FS_PRN_WARN("failed to write file(%s). result=%zd", path, res);
     }
 
