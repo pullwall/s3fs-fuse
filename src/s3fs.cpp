@@ -30,6 +30,7 @@
 #include <getopt.h>
 #include <iostream>
 #include <ostream>
+#include <fstream>
 
 #include "common.h"
 #include "s3fs.h"
