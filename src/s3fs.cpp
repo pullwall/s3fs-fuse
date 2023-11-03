@@ -2803,6 +2803,16 @@ static int s3fs_truncate(const char* _path, off_t size)
 
 static int s3fs_open(const char* _path, struct fuse_file_info* fi)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     WTF8_ENCODE(path)
     int result;
     struct stat st;
@@ -2898,6 +2908,16 @@ static int s3fs_open(const char* _path, struct fuse_file_info* fi)
 
 static int s3fs_read(const char* _path, char* buf, size_t size, off_t offset, struct fuse_file_info* fi)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     WTF8_ENCODE(path)
     ssize_t res;
 
@@ -2926,6 +2946,16 @@ static int s3fs_read(const char* _path, char* buf, size_t size, off_t offset, st
 
 static int s3fs_write(const char* _path, const char* buf, size_t size, off_t offset, struct fuse_file_info* fi)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     WTF8_ENCODE(path)
     ssize_t res;
 
@@ -2960,6 +2990,16 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
 
 static int s3fs_statfs(const char* _path, struct statvfs* stbuf)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // WTF8_ENCODE(path)
     stbuf->f_bsize   = s3fs_block_size;
     stbuf->f_namemax = NAME_MAX;
@@ -2988,6 +3028,16 @@ static int s3fs_statfs(const char* _path, struct statvfs* stbuf)
 
 static int s3fs_flush(const char* _path, struct fuse_file_info* fi)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     WTF8_ENCODE(path)
     int result;
 
@@ -3034,6 +3084,16 @@ static int s3fs_flush(const char* _path, struct fuse_file_info* fi)
 //
 static int s3fs_fsync(const char* _path, int datasync, struct fuse_file_info* fi)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     WTF8_ENCODE(path)
     int result = 0;
 
@@ -3142,6 +3202,16 @@ static int s3fs_release(const char* _path, struct fuse_file_info* fi)
 
 static int s3fs_opendir(const char* _path, struct fuse_file_info* fi)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     WTF8_ENCODE(path)
     int result;
     int mask = (O_RDONLY != (fi->flags & O_ACCMODE) ? W_OK : R_OK);
@@ -3160,6 +3230,16 @@ static int s3fs_opendir(const char* _path, struct fuse_file_info* fi)
 // cppcheck-suppress constParameterCallback
 static bool multi_head_callback(S3fsCurl* s3fscurl, void* param)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fscurl){
         return false;
     }
