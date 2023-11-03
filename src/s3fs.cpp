@@ -28,6 +28,8 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <getopt.h>
+#include <iostream>
+#include <ostream>
 
 #include "common.h"
 #include "s3fs.h"
