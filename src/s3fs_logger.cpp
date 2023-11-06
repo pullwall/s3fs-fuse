@@ -45,11 +45,31 @@ bool                    S3fsLog::time_stamp       = true;
 //-------------------------------------------------------------------
 bool S3fsLog::IsS3fsLogLevel(s3fs_log_level level)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return (level == (S3fsLog::debug_level & level));
 }
 
 std::string S3fsLog::GetCurrentTime()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::ostringstream current_time;
     if(time_stamp){
         struct timeval  now;
@@ -70,6 +90,16 @@ std::string S3fsLog::GetCurrentTime()
 
 bool S3fsLog::SetLogfile(const char* pfile)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!S3fsLog::pSingleton){
         S3FS_PRN_CRIT("S3fsLog::pSingleton is nullptr.");
         return false;
@@ -79,6 +109,16 @@ bool S3fsLog::SetLogfile(const char* pfile)
 
 bool S3fsLog::ReopenLogfile()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!S3fsLog::pSingleton){
         S3FS_PRN_CRIT("S3fsLog::pSingleton is nullptr.");
         return false;
@@ -97,6 +137,16 @@ bool S3fsLog::ReopenLogfile()
 
 S3fsLog::s3fs_log_level S3fsLog::SetLogLevel(s3fs_log_level level)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!S3fsLog::pSingleton){
         S3FS_PRN_CRIT("S3fsLog::pSingleton is nullptr.");
         return S3fsLog::debug_level;    // Although it is an error, it returns the current value.
@@ -106,6 +156,16 @@ S3fsLog::s3fs_log_level S3fsLog::SetLogLevel(s3fs_log_level level)
 
 S3fsLog::s3fs_log_level S3fsLog::BumpupLogLevel()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!S3fsLog::pSingleton){
         S3FS_PRN_CRIT("S3fsLog::pSingleton is nullptr.");
         return S3fsLog::debug_level;    // Although it is an error, it returns the current value.
@@ -115,6 +175,16 @@ S3fsLog::s3fs_log_level S3fsLog::BumpupLogLevel()
 
 bool S3fsLog::SetTimeStamp(bool value)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = S3fsLog::time_stamp;
     S3fsLog::time_stamp = value;
     return old;
@@ -125,6 +195,16 @@ bool S3fsLog::SetTimeStamp(bool value)
 //-------------------------------------------------------------------
 S3fsLog::S3fsLog()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!S3fsLog::pSingleton){
         S3fsLog::pSingleton = this;
 
@@ -138,6 +218,16 @@ S3fsLog::S3fsLog()
 
 S3fsLog::~S3fsLog()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsLog::pSingleton == this){
         FILE*    oldfp = S3fsLog::logfp;
         S3fsLog::logfp = nullptr;
@@ -159,6 +249,16 @@ S3fsLog::~S3fsLog()
 
 bool S3fsLog::LowLoadEnv()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsLog::pSingleton != this){
         S3FS_PRN_ERR("This object is not as same as S3fsLog::pSingleton.");
         return false;
@@ -183,6 +283,16 @@ bool S3fsLog::LowLoadEnv()
 
 bool S3fsLog::LowSetLogfile(const char* pfile)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsLog::pSingleton != this){
         S3FS_PRN_ERR("This object is not as same as S3fsLog::pSingleton.");
         return false;
@@ -227,6 +337,16 @@ bool S3fsLog::LowSetLogfile(const char* pfile)
 
 S3fsLog::s3fs_log_level S3fsLog::LowSetLogLevel(s3fs_log_level level)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsLog::pSingleton != this){
         S3FS_PRN_ERR("This object is not as same as S3fsLog::pSingleton.");
         return S3fsLog::debug_level;    // Although it is an error, it returns the current value.
@@ -243,6 +363,16 @@ S3fsLog::s3fs_log_level S3fsLog::LowSetLogLevel(s3fs_log_level level)
 
 S3fsLog::s3fs_log_level S3fsLog::LowBumpupLogLevel()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsLog::pSingleton != this){
         S3FS_PRN_ERR("This object is not as same as S3fsLog::pSingleton.");
         return S3fsLog::debug_level;    // Although it is an error, it returns the current value.
@@ -259,6 +389,16 @@ S3fsLog::s3fs_log_level S3fsLog::LowBumpupLogLevel()
 
 void s3fs_low_logprn(S3fsLog::s3fs_log_level level, const char* file, const char *func, int line, const char *fmt, ...)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsLog::IsS3fsLogLevel(level)){
         va_list va;
         va_start(va, fmt);
@@ -283,6 +423,16 @@ void s3fs_low_logprn(S3fsLog::s3fs_log_level level, const char* file, const char
 
 void s3fs_low_logprn2(S3fsLog::s3fs_log_level level, int nest, const char* file, const char *func, int line, const char *fmt, ...)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsLog::IsS3fsLogLevel(level)){
         va_list va;
         va_start(va, fmt);
