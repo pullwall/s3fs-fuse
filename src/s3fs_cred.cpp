@@ -53,6 +53,16 @@
 //
 const char* VersionS3fsCredential(bool detail)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     static const char version[]        = "built-in";
     static const char detail_version[] = 
 		"s3fs-fuse built-in Credential I/F Function\n"
@@ -67,6 +77,16 @@ const char* VersionS3fsCredential(bool detail)
 
 bool InitS3fsCredential(const char* popts, char** pperrstr)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(popts && 0 < strlen(popts)){
         S3FS_PRN_WARN("The external credential library does not have InitS3fsCredential function, but credlib_opts value is not empty(%s)", popts);
     }
@@ -80,6 +100,16 @@ bool InitS3fsCredential(const char* popts, char** pperrstr)
 
 bool FreeS3fsCredential(char** pperrstr)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(pperrstr){
         *pperrstr = strdup("The external credential library does not have FreeS3fsCredential function, so built-in function was called.");
     }else{
@@ -90,6 +120,16 @@ bool FreeS3fsCredential(char** pperrstr)
 
 bool UpdateS3fsCredential(char** ppaccess_key_id, char** ppserect_access_key, char** ppaccess_token, long long* ptoken_expire, char** pperrstr)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO("Parameters : ppaccess_key_id=%p, ppserect_access_key=%p, ppaccess_token=%p, ptoken_expire=%p", ppaccess_key_id, ppserect_access_key, ppaccess_token, ptoken_expire);
 
     if(pperrstr){
@@ -136,6 +176,16 @@ std::string S3fsCred::bucket_name;
 //-------------------------------------------------------------------
 bool S3fsCred::SetBucket(const char* bucket)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!bucket || strlen(bucket) == 0){
         return false;
     }
@@ -145,11 +195,31 @@ bool S3fsCred::SetBucket(const char* bucket)
 
 const std::string& S3fsCred::GetBucket()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return S3fsCred::bucket_name;
 }
 
 bool S3fsCred::ParseIAMRoleFromMetaDataResponse(const char* response, std::string& rolename)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!response){
         return false;
     }
@@ -222,6 +292,16 @@ S3fsCred::~S3fsCred()
 //-------------------------------------------------------------------
 bool S3fsCred::SetS3fsPasswdFile(const char* file)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!file || strlen(file) == 0){
         return false;
     }
@@ -232,11 +312,31 @@ bool S3fsCred::SetS3fsPasswdFile(const char* file)
 
 bool S3fsCred::IsSetPasswdFile() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return !passwd_file.empty();
 }
 
 bool S3fsCred::SetAwsProfileName(const char* name)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!name || strlen(name) == 0){
         return false;
     }
@@ -247,6 +347,16 @@ bool S3fsCred::SetAwsProfileName(const char* name)
 
 bool S3fsCred::SetIAMRoleMetadataType(bool flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = load_iamrole;
     load_iamrole = flag;
     return old;
@@ -254,6 +364,16 @@ bool S3fsCred::SetIAMRoleMetadataType(bool flag)
 
 bool S3fsCred::SetAccessKey(const char* AccessKeyId, const char* SecretAccessKey, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock, type);
 
     if((!is_ibm_iam_auth && (!AccessKeyId || '\0' == AccessKeyId[0])) || !SecretAccessKey || '\0' == SecretAccessKey[0]){
@@ -267,6 +387,16 @@ bool S3fsCred::SetAccessKey(const char* AccessKeyId, const char* SecretAccessKey
 
 bool S3fsCred::SetAccessKeyWithSessionToken(const char* AccessKeyId, const char* SecretAccessKey, const char * SessionToken, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock, type);
 
     bool access_key_is_empty        = !AccessKeyId     || '\0' == AccessKeyId[0];
@@ -286,6 +416,16 @@ bool S3fsCred::SetAccessKeyWithSessionToken(const char* AccessKeyId, const char*
 
 bool S3fsCred::IsSetAccessKeys(AutoLock::Type type) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock, type);
 
     return IsSetIAMRole(AutoLock::ALREADY_LOCKED) || ((!AWSAccessKeyId.empty() || is_ibm_iam_auth) && !AWSSecretAccessKey.empty());
@@ -293,6 +433,16 @@ bool S3fsCred::IsSetAccessKeys(AutoLock::Type type) const
 
 bool S3fsCred::SetIsECS(bool flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = is_ecs;
     is_ecs = flag;
     return old;
@@ -300,6 +450,16 @@ bool S3fsCred::SetIsECS(bool flag)
 
 bool S3fsCred::SetIsUseSessionToken(bool flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = is_use_session_token;
     is_use_session_token = flag;
     return old;
@@ -307,6 +467,16 @@ bool S3fsCred::SetIsUseSessionToken(bool flag)
 
 bool S3fsCred::SetIsIBMIAMAuth(bool flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = is_ibm_iam_auth;
     is_ibm_iam_auth = flag;
     return old;
@@ -314,6 +484,16 @@ bool S3fsCred::SetIsIBMIAMAuth(bool flag)
 
 bool S3fsCred::SetIAMRole(const char* role, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock, type);
 
     IAM_role = role ? role : "";
@@ -322,6 +502,16 @@ bool S3fsCred::SetIAMRole(const char* role, AutoLock::Type type)
 
 std::string S3fsCred::GetIAMRole(AutoLock::Type type) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock, type);
 
     return IAM_role;
@@ -329,6 +519,16 @@ std::string S3fsCred::GetIAMRole(AutoLock::Type type) const
 
 bool S3fsCred::IsSetIAMRole(AutoLock::Type type) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock, type);
 
     return !IAM_role.empty();
@@ -336,6 +536,16 @@ bool S3fsCred::IsSetIAMRole(AutoLock::Type type) const
 
 size_t S3fsCred::SetIAMFieldCount(size_t field_count)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     size_t old = IAM_field_count;
     IAM_field_count = field_count;
     return old;
@@ -343,6 +553,16 @@ size_t S3fsCred::SetIAMFieldCount(size_t field_count)
 
 std::string S3fsCred::SetIAMCredentialsURL(const char* url)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string old = IAM_cred_url;
     IAM_cred_url = url ? url : "";
     return old;
@@ -350,6 +570,16 @@ std::string S3fsCred::SetIAMCredentialsURL(const char* url)
 
 std::string S3fsCred::SetIAMTokenField(const char* token_field)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string old = IAM_token_field;
     IAM_token_field = token_field ? token_field : "";
     return old;
@@ -357,6 +587,16 @@ std::string S3fsCred::SetIAMTokenField(const char* token_field)
 
 std::string S3fsCred::SetIAMExpiryField(const char* expiry_field)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string old = IAM_expiry_field;
     IAM_expiry_field = expiry_field ? expiry_field : "";
     return old;
@@ -364,6 +604,16 @@ std::string S3fsCred::SetIAMExpiryField(const char* expiry_field)
 
 bool S3fsCred::GetIAMCredentialsURL(std::string& url, bool check_iam_role, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // check
     if(check_iam_role && !is_ecs && !IsIBMIAMAuth()){
         if(!IsSetIAMRole(type)) {
@@ -427,6 +677,16 @@ bool S3fsCred::GetIAMCredentialsURL(std::string& url, bool check_iam_role, AutoL
 
 int S3fsCred::SetIMDSVersion(int version, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock, type);
 
     int old = IAM_api_version;
@@ -436,6 +696,16 @@ int S3fsCred::SetIMDSVersion(int version, AutoLock::Type type)
 
 int S3fsCred::GetIMDSVersion(AutoLock::Type type) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock, type);
 
     return IAM_api_version;
@@ -443,6 +713,16 @@ int S3fsCred::GetIMDSVersion(AutoLock::Type type) const
 
 bool S3fsCred::SetIAMv2APIToken(const std::string& token, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("Setting AWS IMDSv2 API token to %s", token.c_str());
 
     AutoLock auto_lock(&token_lock, type);
@@ -456,6 +736,16 @@ bool S3fsCred::SetIAMv2APIToken(const std::string& token, AutoLock::Type type)
 
 std::string S3fsCred::GetIAMv2APIToken(AutoLock::Type type) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock, type);
 
     return IAMv2_api_token;
@@ -471,6 +761,16 @@ std::string S3fsCred::GetIAMv2APIToken(AutoLock::Type type) const
 //
 bool S3fsCred::LoadIAMCredentials(AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // url(check iam role)
     std::string url;
 
@@ -512,6 +812,16 @@ bool S3fsCred::LoadIAMCredentials(AutoLock::Type type)
 //
 bool S3fsCred::LoadIAMRoleFromMetaData()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock);
 
     if(load_iamrole){
@@ -546,6 +856,16 @@ bool S3fsCred::LoadIAMRoleFromMetaData()
 
 bool S3fsCred::SetIAMCredentials(const char* response, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("IAM credential response = \"%s\"", response);
 
     iamcredmap_t keyval;
@@ -578,6 +898,16 @@ bool S3fsCred::SetIAMCredentials(const char* response, AutoLock::Type type)
 
 bool S3fsCred::SetIAMRoleFromMetaData(const char* response, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("IAM role name response = \"%s\"", response ? response : "(null)");
 
     std::string rolename;
@@ -597,6 +927,16 @@ bool S3fsCred::SetIAMRoleFromMetaData(const char* response, AutoLock::Type type)
 //
 bool S3fsCred::IsReadableS3fsPasswdFile() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(passwd_file.empty()){
         return false;
     }
@@ -623,6 +963,16 @@ bool S3fsCred::IsReadableS3fsPasswdFile() const
 //
 bool S3fsCred::CheckS3fsPasswdFilePerms()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct stat info;
 
     // let's get the file info
@@ -684,6 +1034,16 @@ bool S3fsCred::CheckS3fsPasswdFilePerms()
 //
 bool S3fsCred::ParseS3fsPasswdFile(bucketkvmap_t& resmap)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string          line;
     size_t               first_pos;
     readline_t           linelist;
@@ -789,6 +1149,16 @@ bool S3fsCred::ParseS3fsPasswdFile(bucketkvmap_t& resmap)
 //
 bool S3fsCred::ReadS3fsPasswdFile(AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bucketkvmap_t bucketmap;
     kvmap_t       keyval;
 
@@ -859,6 +1229,16 @@ bool S3fsCred::ReadS3fsPasswdFile(AutoLock::Type type)
 //
 int S3fsCred::CheckS3fsCredentialAwsFormat(const kvmap_t& kvmap, std::string& access_key_id, std::string& secret_access_key)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string str1(S3fsCred::AWS_ACCESSKEYID);
     std::string str2(S3fsCred::AWS_SECRETKEY);
 
@@ -885,6 +1265,16 @@ int S3fsCred::CheckS3fsCredentialAwsFormat(const kvmap_t& kvmap, std::string& ac
 //
 bool S3fsCred::ReadAwsCredentialFile(const std::string &filename, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // open passwd file
     std::ifstream PF(filename.c_str());
     if(!PF.good()){
@@ -972,6 +1362,16 @@ bool S3fsCred::ReadAwsCredentialFile(const std::string &filename, AutoLock::Type
 //
 bool S3fsCred::InitialS3fsCredentials()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // should be redundant
     if(S3fsCurl::IsPublicBucket()){
         return true;
@@ -1089,6 +1489,16 @@ bool S3fsCred::InitialS3fsCredentials()
 //-------------------------------------------------------------------
 bool S3fsCred::ParseIAMCredentialResponse(const char* response, iamcredmap_t& keyval)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!response){
       return false;
     }
@@ -1144,6 +1554,16 @@ bool S3fsCred::ParseIAMCredentialResponse(const char* response, iamcredmap_t& ke
 
 bool S3fsCred::CheckIAMCredentialUpdate(std::string* access_key_id, std::string* secret_access_key, std::string* access_token)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&token_lock);
 
     if(IsIBMIAMAuth() || IsSetExtCredLib() || is_ecs || IsSetIAMRole(AutoLock::ALREADY_LOCKED)){
@@ -1186,6 +1606,16 @@ bool S3fsCred::CheckIAMCredentialUpdate(std::string* access_key_id, std::string*
 
 const char* S3fsCred::GetCredFuncVersion(bool detail) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     static const char errVersion[] = "unknown";
 
     if(!pFuncCredVersion){
@@ -1199,6 +1629,16 @@ const char* S3fsCred::GetCredFuncVersion(bool detail) const
 //-------------------------------------------------------------------
 bool S3fsCred::SetExtCredLib(const char* arg)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!arg || strlen(arg) == 0){
         return false;
     }
@@ -1209,11 +1649,31 @@ bool S3fsCred::SetExtCredLib(const char* arg)
 
 bool S3fsCred::IsSetExtCredLib() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return !credlib.empty();
 }
 
 bool S3fsCred::SetExtCredLibOpts(const char* args)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!args || strlen(args) == 0){
         return false;
     }
@@ -1224,11 +1684,31 @@ bool S3fsCred::SetExtCredLibOpts(const char* args)
 
 bool S3fsCred::IsSetExtCredLibOpts() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return !credlib_opts.empty();
 }
 
 bool S3fsCred::InitExtCredLib()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!LoadExtCredLib()){
         return false;
     }
@@ -1262,6 +1742,16 @@ bool S3fsCred::InitExtCredLib()
 
 bool S3fsCred::LoadExtCredLib()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(credlib.empty()){
         return false;
     }
@@ -1305,6 +1795,16 @@ bool S3fsCred::LoadExtCredLib()
 
 bool S3fsCred::UnloadExtCredLib()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(hExtCredLib){
         S3FS_PRN_INFO("Unload External Credential Library : %s", credlib.c_str());
 
@@ -1338,6 +1838,16 @@ bool S3fsCred::UnloadExtCredLib()
 
 bool S3fsCred::UpdateExtCredentials(AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!hExtCredLib){
         S3FS_PRN_CRIT("External Credential Library is not loaded, why?");
         return false;
@@ -1404,6 +1914,16 @@ bool S3fsCred::UpdateExtCredentials(AutoLock::Type type)
 //
 int S3fsCred::DetectParam(const char* arg)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!arg){
         S3FS_PRN_EXIT("parameter arg is empty(null)");
         return -1;
@@ -1520,6 +2040,16 @@ int S3fsCred::DetectParam(const char* arg)
 //
 bool S3fsCred::CheckForbiddenBucketParams()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // The first plain argument is the bucket
     if(bucket_name.empty()){
         S3FS_PRN_EXIT("missing BUCKET argument.");
@@ -1552,6 +2082,16 @@ bool S3fsCred::CheckForbiddenBucketParams()
 //
 bool S3fsCred::CheckAllParams()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     //
     // Checking forbidden parameters for bucket
     //
