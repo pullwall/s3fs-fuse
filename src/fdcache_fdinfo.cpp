@@ -25,7 +25,9 @@
 #include <memory>
 #include <sys/stat.h>
 #include <unistd.h>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "common.h"
 #include "s3fs_logger.h"
 #include "s3fs_util.h"
@@ -50,6 +52,16 @@ int PseudoFdInfo::opt_max_threads = -1;
 //
 void* PseudoFdInfo::MultipartUploadThreadWorker(void* arg)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::unique_ptr<pseudofdinfo_thparam> pthparam(static_cast<pseudofdinfo_thparam*>(arg));
     if(!pthparam || !(pthparam->ppseudofdinfo)){
         return reinterpret_cast<void*>(-EIO);
@@ -107,6 +119,16 @@ void* PseudoFdInfo::MultipartUploadThreadWorker(void* arg)
 //------------------------------------------------
 PseudoFdInfo::PseudoFdInfo(int fd, int open_flags) : pseudo_fd(-1), physical_fd(fd), flags(0), upload_fd(-1), uploaded_sem(0), instruct_count(0), completed_count(0), last_result(0)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     pthread_mutexattr_t attr;
     pthread_mutexattr_init(&attr);
 #if S3FS_PTHREAD_ERRORCHECK
@@ -127,6 +149,16 @@ PseudoFdInfo::PseudoFdInfo(int fd, int open_flags) : pseudo_fd(-1), physical_fd(
 
 PseudoFdInfo::~PseudoFdInfo()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Clear();        // call before destrying the mutex
 
     if(is_lock_init){
@@ -141,6 +173,16 @@ PseudoFdInfo::~PseudoFdInfo()
 
 bool PseudoFdInfo::Clear()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // cppcheck-suppress unmatchedSuppression
     // cppcheck-suppress knownConditionTrueFalse
     if(!CancelAllThreads() || !ResetUploadInfo(AutoLock::NONE)){
@@ -159,6 +201,16 @@ bool PseudoFdInfo::Clear()
 
 void PseudoFdInfo::CloseUploadFd()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&upload_list_lock);
 
     if(-1 != upload_fd){
@@ -168,6 +220,16 @@ void PseudoFdInfo::CloseUploadFd()
 
 bool PseudoFdInfo::OpenUploadFd(AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&upload_list_lock, type);
 
     if(-1 != upload_fd){
@@ -204,6 +266,16 @@ bool PseudoFdInfo::OpenUploadFd(AutoLock::Type type)
 
 bool PseudoFdInfo::Set(int fd, int open_flags)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(-1 == fd){
         return false;
     }
@@ -217,6 +289,16 @@ bool PseudoFdInfo::Set(int fd, int open_flags)
 
 bool PseudoFdInfo::Writable() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(-1 == pseudo_fd){
         return false;
     }
@@ -228,6 +310,16 @@ bool PseudoFdInfo::Writable() const
 
 bool PseudoFdInfo::Readable() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(-1 == pseudo_fd){
         return false;
     }
@@ -237,6 +329,16 @@ bool PseudoFdInfo::Readable() const
 
 bool PseudoFdInfo::ClearUploadInfo(bool is_cancel_mp)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(is_cancel_mp){
         // cppcheck-suppress unmatchedSuppression
         // cppcheck-suppress knownConditionTrueFalse
@@ -249,6 +351,16 @@ bool PseudoFdInfo::ClearUploadInfo(bool is_cancel_mp)
 
 bool PseudoFdInfo::ResetUploadInfo(AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&upload_list_lock, type);
 
     upload_id.erase();
@@ -262,6 +374,16 @@ bool PseudoFdInfo::ResetUploadInfo(AutoLock::Type type)
 
 bool PseudoFdInfo::RowInitialUploadInfo(const std::string& id, bool is_cancel_mp, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(is_cancel_mp && AutoLock::ALREADY_LOCKED == type){
         S3FS_PRN_ERR("Internal Error: Could not call this with type=AutoLock::ALREADY_LOCKED and is_cancel_mp=true");
         return false;
@@ -288,6 +410,16 @@ bool PseudoFdInfo::RowInitialUploadInfo(const std::string& id, bool is_cancel_mp
 
 bool PseudoFdInfo::CompleteInstruction(int result, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&upload_list_lock, type);
 
     if(0 != result){
@@ -306,6 +438,16 @@ bool PseudoFdInfo::CompleteInstruction(int result, AutoLock::Type type)
 
 bool PseudoFdInfo::GetUploadId(std::string& id) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!IsUploading()){
         S3FS_PRN_ERR("Multipart Upload has not started yet.");
         return false;
@@ -316,6 +458,16 @@ bool PseudoFdInfo::GetUploadId(std::string& id) const
 
 bool PseudoFdInfo::GetEtaglist(etaglist_t& list) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!IsUploading()){
         S3FS_PRN_ERR("Multipart Upload has not started yet.");
         return false;
@@ -344,6 +496,16 @@ bool PseudoFdInfo::GetEtaglist(etaglist_t& list) const
 //
 bool PseudoFdInfo::AppendUploadPart(off_t start, off_t size, bool is_copy, etagpair** ppetag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!IsUploading()){
         S3FS_PRN_ERR("Multipart Upload has not started yet.");
         return false;
@@ -379,11 +541,31 @@ bool PseudoFdInfo::AppendUploadPart(off_t start, off_t size, bool is_copy, etagp
 //
 static bool filepart_partnum_compare(const filepart& src1, const filepart& src2)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return src1.get_part_number() < src2.get_part_number();
 }
 
 bool PseudoFdInfo::InsertUploadPart(off_t start, off_t size, int part_num, bool is_copy, etagpair** ppetag, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     //S3FS_PRN_DBG("[start=%lld][size=%lld][part_num=%d][is_copy=%s]", static_cast<long long int>(start), static_cast<long long int>(size), part_num, (is_copy ? "true" : "false"));
 
     if(!IsUploading()){
@@ -416,6 +598,16 @@ bool PseudoFdInfo::InsertUploadPart(off_t start, off_t size, int part_num, bool 
 //
 bool PseudoFdInfo::ParallelMultipartUpload(const char* path, const mp_part_list_t& mplist, bool is_copy, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     //S3FS_PRN_DBG("[path=%s][mplist(%zu)]", SAFESTRPTR(path), mplist.size());
 
     AutoLock auto_lock(&upload_list_lock, type);
@@ -468,6 +660,16 @@ bool PseudoFdInfo::ParallelMultipartUpload(const char* path, const mp_part_list_
 
 bool PseudoFdInfo::ParallelMultipartUploadAll(const char* path, const mp_part_list_t& to_upload_list, const mp_part_list_t& copy_list, int& result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_DBG("[path=%s][to_upload_list(%zu)][copy_list(%zu)]", SAFESTRPTR(path), to_upload_list.size(), copy_list.size());
 
     result = 0;
@@ -506,6 +708,16 @@ bool PseudoFdInfo::ParallelMultipartUploadAll(const char* path, const mp_part_li
 //
 ssize_t PseudoFdInfo::UploadBoundaryLastUntreatedArea(const char* path, headers_t& meta, FdEntity* pfdent)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_DBG("[path=%s][pseudo_fd=%d][physical_fd=%d]", SAFESTRPTR(path), pseudo_fd, physical_fd);
 
     if(!path || -1 == physical_fd || -1 == pseudo_fd || !pfdent){
@@ -619,6 +831,16 @@ ssize_t PseudoFdInfo::UploadBoundaryLastUntreatedArea(const char* path, headers_
 
 int PseudoFdInfo::WaitAllThreadsExit()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     int  result;
     bool is_loop = true;
     {
@@ -650,6 +872,16 @@ int PseudoFdInfo::WaitAllThreadsExit()
 
 bool PseudoFdInfo::CancelAllThreads()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool need_cancel = false;
     {
         AutoLock auto_lock(&upload_list_lock);
@@ -686,6 +918,16 @@ bool PseudoFdInfo::CancelAllThreads()
 //
 bool PseudoFdInfo::ExtractUploadPartsFromUntreatedArea(off_t& untreated_start, off_t& untreated_size, mp_part_list_t& to_upload_list, filepart_list_t& cancel_upload_list, off_t max_mp_size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(untreated_start < 0 || untreated_size <= 0){
         S3FS_PRN_ERR("Paramters are wrong(untreated_start=%lld, untreated_size=%lld).", static_cast<long long int>(untreated_start), static_cast<long long int>(untreated_size));
         return false;
@@ -773,6 +1015,16 @@ bool PseudoFdInfo::ExtractUploadPartsFromUntreatedArea(off_t& untreated_start, o
 //
 bool PseudoFdInfo::ExtractUploadPartsFromAllArea(UntreatedParts& untreated_list, mp_part_list_t& to_upload_list, mp_part_list_t& to_copy_list, mp_part_list_t& to_download_list, filepart_list_t& cancel_upload_list, off_t max_mp_size, off_t file_size, bool use_copy)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&upload_list_lock);
 
     // Initiliaze lists
