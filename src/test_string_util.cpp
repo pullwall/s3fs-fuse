@@ -27,6 +27,10 @@
 #include "string_util.h"
 #include "test_util.h"
 
+#include <iostream>
+#include <ostream>
+#include <fstream>
+
 //-------------------------------------------------------------------
 // Global variables for test_string_util
 //-------------------------------------------------------------------
@@ -35,6 +39,16 @@ std::string instance_name;
 
 void test_trim()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     ASSERT_EQUALS(std::string("1234"), trim("  1234  "));
     ASSERT_EQUALS(std::string("1234"), trim("1234  "));
     ASSERT_EQUALS(std::string("1234"), trim("  1234"));
@@ -62,6 +76,16 @@ void test_trim()
 
 void test_base64()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string buf;
     char tmpbuf = '\0';
 
@@ -98,6 +122,16 @@ void test_base64()
 
 void test_strtoofft()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     off_t value;
 
     ASSERT_TRUE(s3fs_strtoofft(&value, "0"));
@@ -126,6 +160,16 @@ void test_strtoofft()
 
 void test_wtf8_encoding()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string ascii("normal std::string");
     std::string utf8("Hyld\xc3\xbdpi \xc3\xbej\xc3\xb3\xc3\xb0""f\xc3\xa9lagsins vex \xc3\xbar k\xc3\xa6rkomnu b\xc3\xb6li \xc3\xad \xc3\xa1st");
     std::string cp1252("Hyld\xfdpi \xfej\xf3\xf0""f\xe9lagsins vex \xfar k\xe6rkomnu b\xf6li \xed \xe1st");
@@ -150,6 +194,16 @@ void test_wtf8_encoding()
 
 void test_cr_encoding()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // bse strings
     std::string base_no("STR");
 
