@@ -234,9 +234,6 @@ int S3fsMultiCurl::MultiPerform()
     bool                     isMultiHead = false;
     Semaphore                sem(GetMaxParallelism());
     int                      rc;
-    std::string logMessage = std::string(__func__) + " function is called.\n";
-    std::string logFilePath = "/s3fs_logs/log.txt";
-    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
 
     if (logFile.is_open()) {
         logFile << logMessage;
