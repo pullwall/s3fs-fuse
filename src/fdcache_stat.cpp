@@ -22,7 +22,9 @@
 #include <unistd.h>
 #include <sys/file.h>
 #include <sys/stat.h>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "s3fs_logger.h"
 #include "fdcache_stat.h"
 #include "fdcache.h"
@@ -35,6 +37,16 @@
 //------------------------------------------------
 std::string CacheFileStat::GetCacheFileStatTopDir()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string top_path;
     if(!FdManager::IsCacheDir() || S3fsCred::GetBucket().empty()){
         return top_path;
@@ -50,6 +62,16 @@ std::string CacheFileStat::GetCacheFileStatTopDir()
 
 int CacheFileStat::MakeCacheFileStatPath(const char* path, std::string& sfile_path, bool is_create_dir)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string top_path = CacheFileStat::GetCacheFileStatTopDir();
     if(top_path.empty()){
         S3FS_PRN_ERR("The path to cache top dir is empty.");
@@ -73,6 +95,16 @@ int CacheFileStat::MakeCacheFileStatPath(const char* path, std::string& sfile_pa
 
 bool CacheFileStat::CheckCacheFileStatTopDir()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string top_path = CacheFileStat::GetCacheFileStatTopDir();
     if(top_path.empty()){
         S3FS_PRN_INFO("The path to cache top dir is empty, thus not need to check permission.");
@@ -84,6 +116,16 @@ bool CacheFileStat::CheckCacheFileStatTopDir()
 
 int CacheFileStat::DeleteCacheFileStat(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!path || '\0' == path[0]){
         return -EINVAL;
     }
@@ -112,6 +154,16 @@ int CacheFileStat::DeleteCacheFileStat(const char* path)
 //
 bool CacheFileStat::DeleteCacheFileStatDirectory()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string top_path = CacheFileStat::GetCacheFileStatTopDir();
     if(top_path.empty()){
         S3FS_PRN_INFO("The path to cache top dir is empty, thus not need to remove it.");
@@ -122,6 +174,16 @@ bool CacheFileStat::DeleteCacheFileStatDirectory()
 
 bool CacheFileStat::RenameCacheFileStat(const char* oldpath, const char* newpath)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!oldpath || '\0' == oldpath[0] || !newpath || '\0' == newpath[0]){
         return false;
     }
@@ -166,6 +228,16 @@ bool CacheFileStat::RenameCacheFileStat(const char* oldpath, const char* newpath
 //------------------------------------------------
 CacheFileStat::CacheFileStat(const char* tpath) : fd(-1)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(tpath && '\0' != tpath[0]){
         SetPath(tpath, true);
     }
@@ -173,11 +245,31 @@ CacheFileStat::CacheFileStat(const char* tpath) : fd(-1)
 
 CacheFileStat::~CacheFileStat()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Release();
 }
 
 bool CacheFileStat::SetPath(const char* tpath, bool is_open)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!tpath || '\0' == tpath[0]){
         return false;
     }
@@ -194,6 +286,16 @@ bool CacheFileStat::SetPath(const char* tpath, bool is_open)
 
 bool CacheFileStat::RawOpen(bool readonly)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(path.empty()){
         return false;
     }
@@ -242,16 +344,46 @@ bool CacheFileStat::RawOpen(bool readonly)
 
 bool CacheFileStat::Open()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return RawOpen(false);
 }
 
 bool CacheFileStat::ReadOnlyOpen()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return RawOpen(true);
 }
 
 bool CacheFileStat::Release()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(-1 == fd){
         // already release
         return true;
