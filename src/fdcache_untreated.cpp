@@ -19,7 +19,9 @@
  */
 
 #include <cstdlib>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "s3fs_logger.h"
 #include "fdcache_untreated.h"
 #include "autolock.h"
@@ -29,6 +31,16 @@
 //------------------------------------------------
 UntreatedParts::UntreatedParts() : last_tag(0) //, is_lock_init(false)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     pthread_mutexattr_t attr;
     pthread_mutexattr_init(&attr);
 #if S3FS_PTHREAD_ERRORCHECK
@@ -45,6 +57,16 @@ UntreatedParts::UntreatedParts() : last_tag(0) //, is_lock_init(false)
 
 UntreatedParts::~UntreatedParts()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(is_lock_init){
         int result;
         if(0 != (result = pthread_mutex_destroy(&untreated_list_lock))){
@@ -57,12 +79,32 @@ UntreatedParts::~UntreatedParts()
 
 bool UntreatedParts::empty()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&untreated_list_lock);
     return untreated_list.empty();
 }
 
 bool UntreatedParts::AddPart(off_t start, off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(start < 0 || size <= 0){
         S3FS_PRN_ERR("Paramter are wrong(start=%lld, size=%lld).", static_cast<long long int>(start), static_cast<long long int>(size));
         return false;
@@ -101,6 +143,16 @@ bool UntreatedParts::AddPart(off_t start, off_t size)
 
 bool UntreatedParts::RowGetPart(off_t& start, off_t& size, off_t max_size, off_t min_size, bool lastpart) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(max_size <= 0 || min_size < 0 || max_size < min_size){
         S3FS_PRN_ERR("Paramter are wrong(max_size=%lld, min_size=%lld).", static_cast<long long int>(max_size), static_cast<long long int>(min_size));
         return false;
@@ -136,6 +188,16 @@ bool UntreatedParts::RowGetPart(off_t& start, off_t& size, off_t max_size, off_t
 //
 bool UntreatedParts::ClearParts(off_t start, off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(start < 0 || size < 0){
         S3FS_PRN_ERR("Paramter are wrong(start=%lld, size=%lld).", static_cast<long long int>(start), static_cast<long long int>(size));
         return false;
@@ -193,6 +255,16 @@ bool UntreatedParts::ClearParts(off_t start, off_t size)
 //
 bool UntreatedParts::GetLastUpdatePart(off_t& start, off_t& size) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&untreated_list_lock);
 
     for(untreated_list_t::const_iterator iter = untreated_list.begin(); iter != untreated_list.end(); ++iter){
@@ -213,6 +285,16 @@ bool UntreatedParts::GetLastUpdatePart(off_t& start, off_t& size) const
 //
 bool UntreatedParts::ReplaceLastUpdatePart(off_t start, off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&untreated_list_lock);
 
     for(untreated_list_t::iterator iter = untreated_list.begin(); iter != untreated_list.end(); ++iter){
@@ -234,6 +316,16 @@ bool UntreatedParts::ReplaceLastUpdatePart(off_t start, off_t size)
 //
 bool UntreatedParts::RemoveLastUpdatePart()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&untreated_list_lock);
 
     for(untreated_list_t::iterator iter = untreated_list.begin(); iter != untreated_list.end(); ++iter){
@@ -250,6 +342,16 @@ bool UntreatedParts::RemoveLastUpdatePart()
 //
 bool UntreatedParts::Duplicate(untreated_list_t& list)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&untreated_list_lock);
 
     list = untreated_list;
@@ -258,6 +360,16 @@ bool UntreatedParts::Duplicate(untreated_list_t& list)
 
 void UntreatedParts::Dump()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&untreated_list_lock);
 
     S3FS_PRN_DBG("untreated list = [");
