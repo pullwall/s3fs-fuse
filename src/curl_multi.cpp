@@ -22,7 +22,9 @@
 #include <cstdlib>
 #include <cerrno>
 #include <vector>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "s3fs.h"
 #include "s3fs_logger.h"
 #include "curl_multi.h"
@@ -132,6 +134,16 @@ int S3fsMultiCurl::MultiPerform()
     bool                     isMultiHead = false;
     Semaphore                sem(GetMaxParallelism());
     int                      rc;
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
 
     for(s3fscurllist_t::iterator iter = clist_req.begin(); iter != clist_req.end(); ++iter) {
         pthread_t   thread;
@@ -201,6 +213,16 @@ int S3fsMultiCurl::MultiPerform()
 
 int S3fsMultiCurl::MultiRead()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     int result = 0;
 
     for(s3fscurllist_t::iterator iter = clist_req.begin(); iter != clist_req.end(); ){
@@ -321,6 +343,16 @@ int S3fsMultiCurl::MultiRead()
 
 int S3fsMultiCurl::Request()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("[count=%zu]", clist_all.size());
 
     // Make request list.
@@ -360,6 +392,16 @@ int S3fsMultiCurl::Request()
 //
 void* S3fsMultiCurl::RequestPerformWrapper(void* arg)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3fsCurl* s3fscurl= static_cast<S3fsCurl*>(arg);
     void*     result  = nullptr;
     if(!s3fscurl){
