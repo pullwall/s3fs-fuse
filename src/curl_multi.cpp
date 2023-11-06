@@ -37,6 +37,16 @@
 //-------------------------------------------------------------------
 S3fsMultiCurl::S3fsMultiCurl(int maxParallelism) : maxParallelism(maxParallelism), SuccessCallback(nullptr), NotFoundCallback(nullptr), RetryCallback(nullptr), pSuccessCallbackParam(nullptr), pNotFoundCallbackParam(nullptr)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     int result;
     pthread_mutexattr_t attr;
     pthread_mutexattr_init(&attr);
@@ -51,6 +61,16 @@ S3fsMultiCurl::S3fsMultiCurl(int maxParallelism) : maxParallelism(maxParallelism
 
 S3fsMultiCurl::~S3fsMultiCurl()
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Clear();
     int result;
     if(0 != (result = pthread_mutex_destroy(&completed_tids_lock))){
@@ -60,6 +80,16 @@ S3fsMultiCurl::~S3fsMultiCurl()
 
 bool S3fsMultiCurl::ClearEx(bool is_all)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     s3fscurllist_t::iterator iter;
     for(iter = clist_req.begin(); iter != clist_req.end(); ++iter){
         S3fsCurl* s3fscurl = iter->get();
@@ -84,6 +114,16 @@ bool S3fsMultiCurl::ClearEx(bool is_all)
 
 S3fsMultiSuccessCallback S3fsMultiCurl::SetSuccessCallback(S3fsMultiSuccessCallback function)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3fsMultiSuccessCallback old = SuccessCallback;
     SuccessCallback = function;
     return old;
@@ -91,6 +131,16 @@ S3fsMultiSuccessCallback S3fsMultiCurl::SetSuccessCallback(S3fsMultiSuccessCallb
 
 S3fsMultiNotFoundCallback S3fsMultiCurl::SetNotFoundCallback(S3fsMultiNotFoundCallback function)
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3fsMultiNotFoundCallback old = NotFoundCallback;
     NotFoundCallback = function;
     return old;
@@ -98,6 +148,16 @@ S3fsMultiNotFoundCallback S3fsMultiCurl::SetNotFoundCallback(S3fsMultiNotFoundCa
 
 S3fsMultiRetryCallback S3fsMultiCurl::SetRetryCallback(S3fsMultiRetryCallback function)
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3fsMultiRetryCallback old = RetryCallback;
     RetryCallback = function;
     return old;
@@ -105,6 +165,16 @@ S3fsMultiRetryCallback S3fsMultiCurl::SetRetryCallback(S3fsMultiRetryCallback fu
 
 void* S3fsMultiCurl::SetSuccessCallbackParam(void* param)
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     void* old = pSuccessCallbackParam;
     pSuccessCallbackParam = param;
     return old;
@@ -112,6 +182,16 @@ void* S3fsMultiCurl::SetSuccessCallbackParam(void* param)
 
 void* S3fsMultiCurl::SetNotFoundCallbackParam(void* param)
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     void* old = pNotFoundCallbackParam;
     pNotFoundCallbackParam = param;
     return old;
@@ -119,6 +199,16 @@ void* S3fsMultiCurl::SetNotFoundCallbackParam(void* param)
 
 bool S3fsMultiCurl::SetS3fsCurlObject(std::unique_ptr<S3fsCurl>&& s3fscurl)
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fscurl){
         return false;
     }
@@ -129,6 +219,16 @@ bool S3fsMultiCurl::SetS3fsCurlObject(std::unique_ptr<S3fsCurl>&& s3fscurl)
 
 int S3fsMultiCurl::MultiPerform()
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::vector<pthread_t>   threads;
     bool                     success = true;
     bool                     isMultiHead = false;
