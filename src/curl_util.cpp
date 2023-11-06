@@ -21,7 +21,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <curl/curl.h>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "common.h"
 #include "s3fs_logger.h"
 #include "curl_util.h"
@@ -116,6 +118,16 @@ struct curl_slist* curl_slist_remove(struct curl_slist* list, const char* key)
 
 std::string get_sorted_header_keys(const struct curl_slist* list)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string sorted_headers;
 
     if(!list){
@@ -143,6 +155,16 @@ std::string get_sorted_header_keys(const struct curl_slist* list)
 
 std::string get_header_value(const struct curl_slist* list, const std::string &key)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!list){
         return "";
     }
@@ -162,6 +184,16 @@ std::string get_header_value(const struct curl_slist* list, const std::string &k
 
 std::string get_canonical_headers(const struct curl_slist* list, bool only_amz)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string canonical_headers;
 
     if(!list){
@@ -207,6 +239,16 @@ bool MakeUrlResource(const char* realpath, std::string& resourcepath, std::strin
 
 std::string prepare_url(const char* url)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("URL is %s", url);
 
     std::string uri;
@@ -262,6 +304,16 @@ bool make_md5_from_binary(const char* pstr, size_t length, std::string& md5)
 
 std::string url_to_host(const std::string &url)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("url is %s", url.c_str());
 
     static const char HTTP[] = "http://";
@@ -287,6 +339,16 @@ std::string url_to_host(const std::string &url)
 
 std::string get_bucket_host()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!pathrequeststyle){
         return S3fsCred::GetBucket() + "." + url_to_host(s3host);
     }
@@ -295,6 +357,16 @@ std::string get_bucket_host()
 
 const char* getCurlDebugHead(curl_infotype type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     const char* unknown = "";
     const char* dataIn  = "BODY <";
     const char* dataOut = "BODY >";
