@@ -26,7 +26,9 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/statvfs.h>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "fdcache.h"
 #include "fdcache_stat.h"
 #include "s3fs_util.h"
@@ -94,6 +96,16 @@ std::string     FdManager::tmp_dir = "/tmp";
 //------------------------------------------------
 bool FdManager::SetCacheDir(const char* dir)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!dir || '\0' == dir[0]){
         cache_dir = "";
     }else{
@@ -104,6 +116,16 @@ bool FdManager::SetCacheDir(const char* dir)
 
 bool FdManager::SetCacheCheckOutput(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!path || '\0' == path[0]){
         check_cache_output.erase();
     }else{
@@ -114,6 +136,16 @@ bool FdManager::SetCacheCheckOutput(const char* path)
 
 bool FdManager::DeleteCacheDirectory()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(FdManager::cache_dir.empty()){
         return true;
     }
@@ -136,6 +168,16 @@ bool FdManager::DeleteCacheDirectory()
 
 int FdManager::DeleteCacheFile(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("[path=%s]", SAFESTRPTR(path));
 
     if(!path){
@@ -169,6 +211,16 @@ int FdManager::DeleteCacheFile(const char* path)
 
 bool FdManager::MakeCachePath(const char* path, std::string& cache_path, bool is_create_dir, bool is_mirror_path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(FdManager::cache_dir.empty()){
         cache_path = "";
         return true;
@@ -201,6 +253,16 @@ bool FdManager::MakeCachePath(const char* path, std::string& cache_path, bool is
 
 bool FdManager::CheckCacheTopDir()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(FdManager::cache_dir.empty()){
         return true;
     }
@@ -211,6 +273,16 @@ bool FdManager::CheckCacheTopDir()
 
 bool FdManager::MakeRandomTempPath(const char* path, std::string& tmppath)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     char szBuff[64];
 
     snprintf(szBuff, sizeof(szBuff), NOCACHE_PATH_PREFIX_FORM, random());   // worry for performance, but maybe don't worry.
@@ -222,6 +294,16 @@ bool FdManager::MakeRandomTempPath(const char* path, std::string& tmppath)
 
 bool FdManager::SetCheckCacheDirExist(bool is_check)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = FdManager::check_cache_dir_exist;
     FdManager::check_cache_dir_exist = is_check;
     return old;
@@ -229,6 +311,16 @@ bool FdManager::SetCheckCacheDirExist(bool is_check)
 
 bool FdManager::CheckCacheDirExist()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!FdManager::check_cache_dir_exist){
         return true;
     }
@@ -240,12 +332,32 @@ bool FdManager::CheckCacheDirExist()
 
 off_t FdManager::GetEnsureFreeDiskSpace()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&FdManager::reserved_diskspace_lock);
     return FdManager::free_disk_space;
 }
 
 off_t FdManager::SetEnsureFreeDiskSpace(off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&FdManager::reserved_diskspace_lock);
     off_t old = FdManager::free_disk_space;
     FdManager::free_disk_space = size;
@@ -254,6 +366,16 @@ off_t FdManager::SetEnsureFreeDiskSpace(off_t size)
 
 bool FdManager::InitFakeUsedDiskSize(off_t fake_freesize)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     FdManager::fake_used_disk_space = 0;    // At first, clear this value because this value is used in GetFreeDiskSpace.
 
     off_t actual_freesize = FdManager::GetFreeDiskSpace(nullptr);
@@ -268,6 +390,16 @@ bool FdManager::InitFakeUsedDiskSize(off_t fake_freesize)
 
 off_t FdManager::GetFreeDiskSpace(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct statvfs vfsbuf;
     std::string ctoppath;
     if(!FdManager::cache_dir.empty()){
@@ -296,12 +428,32 @@ off_t FdManager::GetFreeDiskSpace(const char* path)
 
 bool FdManager::IsSafeDiskSpace(const char* path, off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     off_t fsize = FdManager::GetFreeDiskSpace(path);
     return size + FdManager::GetEnsureFreeDiskSpace() <= fsize;
 }
 
 bool FdManager::HaveLseekHole()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(FdManager::checked_lseek){
         return FdManager::have_lseek_hole;
     }
@@ -338,6 +490,16 @@ bool FdManager::HaveLseekHole()
 
 bool FdManager::SetTmpDir(const char *dir)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!dir || '\0' == dir[0]){
         tmp_dir = "/tmp";
     }else{
@@ -348,6 +510,16 @@ bool FdManager::SetTmpDir(const char *dir)
 
 bool FdManager::IsDir(const std::string* dir)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // check the directory
     struct stat st;
     if(0 != stat(dir->c_str(), &st)){
@@ -363,6 +535,16 @@ bool FdManager::IsDir(const std::string* dir)
 
 bool FdManager::CheckTmpDirExist()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(FdManager::tmp_dir.empty()){
         return true;
     }
@@ -370,6 +552,16 @@ bool FdManager::CheckTmpDirExist()
 }
 
 FILE* FdManager::MakeTempFile() {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     int fd;
     char cfn[PATH_MAX];
     std::string fn = tmp_dir + "/s3fstmp.XXXXXX";
@@ -390,6 +582,16 @@ FILE* FdManager::MakeTempFile() {
 
 bool FdManager::HasOpenEntityFd(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&FdManager::fd_manager_lock);
 
     FdEntity*   ent;
@@ -405,6 +607,16 @@ bool FdManager::HasOpenEntityFd(const char* path)
 //
 int FdManager::GetOpenFdCount(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&FdManager::fd_manager_lock);
 
     return FdManager::singleton.GetPseudoFdCount(path);
@@ -415,6 +627,16 @@ int FdManager::GetOpenFdCount(const char* path)
 //------------------------------------------------
 FdManager::FdManager()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(this == FdManager::get()){
         pthread_mutexattr_t attr;
         pthread_mutexattr_init(&attr);
@@ -442,6 +664,16 @@ FdManager::FdManager()
 
 FdManager::~FdManager()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(this == FdManager::get()){
         for(fdent_map_t::iterator iter = fent.begin(); fent.end() != iter; ++iter){
             FdEntity* ent = (*iter).second;
@@ -473,6 +705,16 @@ FdManager::~FdManager()
 
 FdEntity* FdManager::GetFdEntity(const char* path, int& existfd, bool newfd, AutoLock::Type locktype)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("[path=%s][pseudo_fd=%d]", SAFESTRPTR(path), existfd);
 
     if(!path || '\0' == path[0]){
@@ -526,6 +768,16 @@ FdEntity* FdManager::GetFdEntity(const char* path, int& existfd, bool newfd, Aut
 
 FdEntity* FdManager::Open(int& fd, const char* path, const headers_t* pmeta, off_t size, const struct timespec& ts_mctime, int flags, bool force_tmpfile, bool is_create, bool ignore_modify, AutoLock::Type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_DBG("[path=%s][size=%lld][ts_mctime=%s][flags=0x%x][force_tmpfile=%s][create=%s][ignore_modify=%s]", SAFESTRPTR(path), static_cast<long long>(size), str(ts_mctime).c_str(), flags, (force_tmpfile ? "yes" : "no"), (is_create ? "yes" : "no"), (ignore_modify ? "yes" : "no"));
 
     if(!path || '\0' == path[0]){
@@ -618,6 +870,16 @@ FdEntity* FdManager::Open(int& fd, const char* path, const headers_t* pmeta, off
 //
 FdEntity* FdManager::GetExistFdEntity(const char* path, int existfd)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_DBG("[path=%s][pseudo_fd=%d]", SAFESTRPTR(path), existfd);
 
     AutoLock auto_lock(&FdManager::fd_manager_lock);
@@ -635,6 +897,16 @@ FdEntity* FdManager::GetExistFdEntity(const char* path, int existfd)
 
 FdEntity* FdManager::OpenExistFdEntity(const char* path, int& fd, int flags)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_DBG("[path=%s][flags=0x%x]", SAFESTRPTR(path), flags);
 
     // search entity by path, and create pseudo fd
@@ -652,6 +924,16 @@ FdEntity* FdManager::OpenExistFdEntity(const char* path, int& fd, int flags)
 //
 int FdManager::GetPseudoFdCount(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_DBG("[path=%s]", SAFESTRPTR(path));
 
     if(!path || '\0' == path[0]){
@@ -671,6 +953,16 @@ int FdManager::GetPseudoFdCount(const char* path)
 
 void FdManager::Rename(const std::string &from, const std::string &to)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&FdManager::fd_manager_lock);
 
     fdent_map_t::iterator iter = fent.find(from);
@@ -710,6 +1002,16 @@ void FdManager::Rename(const std::string &from, const std::string &to)
 
 bool FdManager::Close(FdEntity* ent, int fd)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_DBG("[ent->file=%s][pseudo_fd=%d]", ent ? ent->GetPath().c_str() : "", fd);
 
     if(!ent || -1 == fd){
@@ -742,6 +1044,16 @@ bool FdManager::Close(FdEntity* ent, int fd)
 
 bool FdManager::ChangeEntityToTempPath(FdEntity* ent, const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&FdManager::fd_manager_lock);
 
     for(fdent_map_t::iterator iter = fent.begin(); iter != fent.end(); ){
@@ -760,6 +1072,16 @@ bool FdManager::ChangeEntityToTempPath(FdEntity* ent, const char* path)
 
 void FdManager::CleanupCacheDir()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     //S3FS_PRN_DBG("cache cleanup requested");
 
     if(!FdManager::IsCacheDir()){
@@ -780,6 +1102,16 @@ void FdManager::CleanupCacheDir()
 
 void FdManager::CleanupCacheDirInternal(const std::string &path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     DIR*           dp;
     struct dirent* dent;
     std::string    abs_path = cache_dir + "/" + S3fsCred::GetBucket() + path;
@@ -823,6 +1155,16 @@ void FdManager::CleanupCacheDirInternal(const std::string &path)
 
 bool FdManager::ReserveDiskSpace(off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(IsSafeDiskSpace(nullptr, size)){
         AutoLock auto_lock(&FdManager::reserved_diskspace_lock);
         free_disk_space += size;
@@ -833,6 +1175,16 @@ bool FdManager::ReserveDiskSpace(off_t size)
 
 void FdManager::FreeReservedDiskSpace(off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&FdManager::reserved_diskspace_lock);
     free_disk_space -= size;
 }
@@ -867,6 +1219,16 @@ void FdManager::FreeReservedDiskSpace(off_t size)
 //
 bool FdManager::RawCheckAllCache(FILE* fp, const char* cache_stat_top_dir, const char* sub_path, int& total_file_cnt, int& err_file_cnt, int& err_dir_cnt)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!cache_stat_top_dir || '\0' == cache_stat_top_dir[0] || !sub_path || '\0' == sub_path[0]){
         S3FS_PRN_ERR("Parameter cache_stat_top_dir is empty.");
         return false;
@@ -1006,6 +1368,16 @@ bool FdManager::RawCheckAllCache(FILE* fp, const char* cache_stat_top_dir, const
 
 bool FdManager::CheckAllCache()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!FdManager::HaveLseekHole()){
         S3FS_PRN_ERR("lseek does not support SEEK_DATA/SEEK_HOLE, then could not check cache.");
         return false;
