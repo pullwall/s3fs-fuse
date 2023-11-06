@@ -20,7 +20,9 @@
 
 #include <cstdio>
 #include <string>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "s3fs_auth.h"
 #include "string_util.h"
 
@@ -29,6 +31,16 @@
 //-------------------------------------------------------------------
 std::string s3fs_get_content_md5(int fd)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     md5_t md5;
     if(!s3fs_md5_fd(fd, 0, -1, &md5)){
         // TODO: better return value?
@@ -39,6 +51,16 @@ std::string s3fs_get_content_md5(int fd)
 
 std::string s3fs_sha256_hex_fd(int fd, off_t start, off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     sha256_t sha256;
 
     if(!s3fs_sha256_fd(fd, start, size, &sha256)){
