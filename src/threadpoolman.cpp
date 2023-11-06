@@ -27,6 +27,10 @@
 #include "threadpoolman.h"
 #include "autolock.h"
 
+#include <iostream>
+#include <ostream>
+#include <fstream>
+
 //------------------------------------------------
 // ThreadPoolMan class variables
 //------------------------------------------------
@@ -37,6 +41,16 @@ ThreadPoolMan* ThreadPoolMan::singleton = nullptr;
 //------------------------------------------------
 bool ThreadPoolMan::Initialize(int count)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(ThreadPoolMan::singleton){
         S3FS_PRN_WARN("Already singleton for Thread Manager is existed, then re-create it.");
         ThreadPoolMan::Destroy();
@@ -47,6 +61,16 @@ bool ThreadPoolMan::Initialize(int count)
 
 void ThreadPoolMan::Destroy()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(ThreadPoolMan::singleton){
         delete ThreadPoolMan::singleton;
         ThreadPoolMan::singleton = nullptr;
@@ -55,6 +79,16 @@ void ThreadPoolMan::Destroy()
 
 bool ThreadPoolMan::Instruct(thpoolman_param* pparam)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!ThreadPoolMan::singleton){
         S3FS_PRN_WARN("The singleton object is not initialized yet.");
         return false;
@@ -67,6 +101,16 @@ bool ThreadPoolMan::Instruct(thpoolman_param* pparam)
 //
 void* ThreadPoolMan::Worker(void* arg)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     ThreadPoolMan* psingleton = static_cast<ThreadPoolMan*>(arg);
 
     if(!psingleton){
@@ -179,18 +223,48 @@ ThreadPoolMan::~ThreadPoolMan()
 
 bool ThreadPoolMan::IsExit() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&thread_exit_flag_lock);
     return is_exit;
 }
 
 void ThreadPoolMan::SetExitFlag(bool exit_flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&thread_exit_flag_lock);
     is_exit = exit_flag;
 }
 
 bool ThreadPoolMan::StopThreads()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(thread_list.empty()){
         S3FS_PRN_INFO("Any threads are running now, then nothing to do.");
         return true;
@@ -230,6 +304,16 @@ bool ThreadPoolMan::StopThreads()
 
 bool ThreadPoolMan::StartThreads(int count)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(count < 1){
         S3FS_PRN_ERR("Failed to creating threads, because thread count(%d) is under 1.", count);
         return false;
@@ -261,6 +345,16 @@ bool ThreadPoolMan::StartThreads(int count)
 
 bool ThreadPoolMan::SetInstruction(thpoolman_param* pparam)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!pparam){
         S3FS_PRN_ERR("The parameter value is nullptr.");
         return false;
