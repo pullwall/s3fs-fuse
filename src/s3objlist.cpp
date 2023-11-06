@@ -20,6 +20,9 @@
 
 #include <cstdio>
 #include <cstring>
+#include <iostream>
+#include <ostream>
+#include <fstream>
 
 #include "s3objlist.h"
 
@@ -35,6 +38,16 @@
 //
 bool S3ObjList::insert(const char* name, const char* etag, bool is_dir)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!name || '\0' == name[0]){
         return false;
     }
@@ -103,6 +116,16 @@ bool S3ObjList::insert(const char* name, const char* etag, bool is_dir)
 
 bool S3ObjList::insert_normalized(const char* name, const char* normalized, bool is_dir)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!name || '\0' == name[0] || !normalized || '\0' == normalized[0]){
         return false;
     }
@@ -129,6 +152,16 @@ bool S3ObjList::insert_normalized(const char* name, const char* normalized, bool
 
 const s3obj_entry* S3ObjList::GetS3Obj(const char* name) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     s3obj_t::const_iterator iter;
 
     if(!name || '\0' == name[0]){
@@ -142,6 +175,16 @@ const s3obj_entry* S3ObjList::GetS3Obj(const char* name) const
 
 std::string S3ObjList::GetOrgName(const char* name) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     const s3obj_entry* ps3obj;
 
     if(!name || '\0' == name[0]){
@@ -155,6 +198,16 @@ std::string S3ObjList::GetOrgName(const char* name) const
 
 std::string S3ObjList::GetNormalizedName(const char* name) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     const s3obj_entry* ps3obj;
 
     if(!name || '\0' == name[0]){
@@ -171,6 +224,16 @@ std::string S3ObjList::GetNormalizedName(const char* name) const
 
 std::string S3ObjList::GetETag(const char* name) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     const s3obj_entry* ps3obj;
 
     if(!name || '\0' == name[0]){
@@ -184,6 +247,16 @@ std::string S3ObjList::GetETag(const char* name) const
 
 bool S3ObjList::IsDir(const char* name) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     const s3obj_entry* ps3obj;
 
     if(nullptr == (ps3obj = GetS3Obj(name))){
@@ -194,6 +267,16 @@ bool S3ObjList::IsDir(const char* name) const
 
 bool S3ObjList::GetLastName(std::string& lastname) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool result = false;
     lastname = "";
     for(s3obj_t::const_iterator iter = objects.begin(); iter != objects.end(); ++iter){
@@ -214,6 +297,16 @@ bool S3ObjList::GetLastName(std::string& lastname) const
 
 bool S3ObjList::GetNameList(s3obj_list_t& list, bool OnlyNormalized, bool CutSlash) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     s3obj_t::const_iterator iter;
 
     for(iter = objects.begin(); objects.end() != iter; ++iter){
@@ -234,6 +327,16 @@ typedef std::map<std::string, bool> s3obj_h_t;
 
 bool S3ObjList::MakeHierarchizedList(s3obj_list_t& list, bool haveSlash)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     s3obj_h_t h_map;
     s3obj_h_t::iterator hiter;
     s3obj_list_t::const_iterator liter;
