@@ -20,6 +20,9 @@
 
 #include <cstdlib>
 #include <cerrno>
+#include <iostream>
+#include <ostream>
+#include <fstream>
 
 #include "autolock.h"
 #include "s3fs_logger.h"
@@ -54,11 +57,31 @@ AutoLock::AutoLock(pthread_mutex_t* pmutex, Type type) : auto_mutex(pmutex)
 
 bool AutoLock::isLockAcquired() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return is_lock_acquired;
 }
 
 AutoLock::~AutoLock()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if (is_lock_acquired) {
         int result = pthread_mutex_unlock(auto_mutex);
         if(result != 0){
