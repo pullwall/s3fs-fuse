@@ -37,7 +37,9 @@
 #endif
 #include <string>
 #include <map>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "common.h"
 #include "s3fs.h"
 #include "s3fs_auth.h"
@@ -50,6 +52,16 @@
 
 const char* s3fs_crypt_lib_name(void)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     static const char version[] = "GnuTLS(nettle)";
 
     return version;
@@ -59,6 +71,16 @@ const char* s3fs_crypt_lib_name(void)
 
 const char* s3fs_crypt_lib_name()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     static const char version[] = "GnuTLS(gcrypt)";
 
     return version;
@@ -71,6 +93,16 @@ const char* s3fs_crypt_lib_name()
 //-------------------------------------------------------------------
 bool s3fs_init_global_ssl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(GNUTLS_E_SUCCESS != gnutls_global_init()){
         return false;
     }
@@ -84,6 +116,16 @@ bool s3fs_init_global_ssl()
 
 bool s3fs_destroy_global_ssl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     gnutls_global_deinit();
     return true;
 }
@@ -93,11 +135,31 @@ bool s3fs_destroy_global_ssl()
 //-------------------------------------------------------------------
 bool s3fs_init_crypt_mutex()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return true;
 }
 
 bool s3fs_destroy_crypt_mutex()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return true;
 }
 
@@ -108,6 +170,16 @@ bool s3fs_destroy_crypt_mutex()
 
 std::unique_ptr<unsigned char[]> s3fs_HMAC(const void* key, size_t keylen, const unsigned char* data, size_t datalen, unsigned int* digestlen)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!key || !data || !digestlen){
         return nullptr;
     }
@@ -125,6 +197,16 @@ std::unique_ptr<unsigned char[]> s3fs_HMAC(const void* key, size_t keylen, const
 
 std::unique_ptr<unsigned char[]> s3fs_HMAC256(const void* key, size_t keylen, const unsigned char* data, size_t datalen, unsigned int* digestlen)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!key || !data || !digestlen){
         return nullptr;
     }
@@ -144,6 +226,16 @@ std::unique_ptr<unsigned char[]> s3fs_HMAC256(const void* key, size_t keylen, co
 
 std::unique_ptr<unsigned char[]> s3fs_HMAC(const void* key, size_t keylen, const unsigned char* data, size_t datalen, unsigned int* digestlen)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!key || !data || !digestlen){
         return nullptr;
     }
@@ -160,6 +252,16 @@ std::unique_ptr<unsigned char[]> s3fs_HMAC(const void* key, size_t keylen, const
 
 std::unique_ptr<unsigned char[]> s3fs_HMAC256(const void* key, size_t keylen, const unsigned char* data, size_t datalen, unsigned int* digestlen)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!key || !data || !digestlen){
         return nullptr;
     }
@@ -182,6 +284,16 @@ std::unique_ptr<unsigned char[]> s3fs_HMAC256(const void* key, size_t keylen, co
 #ifdef USE_GNUTLS_NETTLE
 bool s3fs_md5(const unsigned char* data, size_t datalen, md5_t* result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct md5_ctx ctx_md5;
     md5_init(&ctx_md5);
     md5_update(&ctx_md5, datalen, data);
@@ -192,6 +304,16 @@ bool s3fs_md5(const unsigned char* data, size_t datalen, md5_t* result)
 
 bool s3fs_md5_fd(int fd, off_t start, off_t size, md5_t* result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct md5_ctx ctx_md5;
     off_t          bytes;
 
@@ -229,6 +351,16 @@ bool s3fs_md5_fd(int fd, off_t start, off_t size, md5_t* result)
 
 bool s3fs_md5(const unsigned char* data, size_t datalen, md5_t* digest)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     gcry_md_hd_t   ctx_md5;
     gcry_error_t   err;
     if(GPG_ERR_NO_ERROR != (err = gcry_md_open(&ctx_md5, GCRY_MD_MD5, 0))){
@@ -243,6 +375,16 @@ bool s3fs_md5(const unsigned char* data, size_t datalen, md5_t* digest)
 
 bool s3fs_md5_fd(int fd, off_t start, off_t size, md5_t* result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     gcry_md_hd_t ctx_md5;
     gcry_error_t err;
     off_t bytes;
@@ -290,6 +432,16 @@ bool s3fs_md5_fd(int fd, off_t start, off_t size, md5_t* result)
 #ifdef USE_GNUTLS_NETTLE
 bool s3fs_sha256(const unsigned char* data, size_t datalen, sha256_t* digest)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct sha256_ctx ctx_sha256;
     sha256_init(&ctx_sha256);
     sha256_update(&ctx_sha256, datalen, data);
@@ -300,6 +452,16 @@ bool s3fs_sha256(const unsigned char* data, size_t datalen, sha256_t* digest)
 
 bool s3fs_sha256_fd(int fd, off_t start, off_t size, sha256_t* result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct sha256_ctx ctx_sha256;
     off_t             bytes;
 
@@ -329,6 +491,16 @@ bool s3fs_sha256_fd(int fd, off_t start, off_t size, sha256_t* result)
 
 bool s3fs_sha256(const unsigned char* data, size_t datalen, sha256_t* digest)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     gcry_md_hd_t   ctx_sha256;
     gcry_error_t   err;
     if(GPG_ERR_NO_ERROR != (err = gcry_md_open(&ctx_sha256, GCRY_MD_SHA256, 0))){
@@ -344,6 +516,16 @@ bool s3fs_sha256(const unsigned char* data, size_t datalen, sha256_t* digest)
 
 bool s3fs_sha256_fd(int fd, off_t start, off_t size, sha256_t* result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     gcry_md_hd_t   ctx_sha256;
     gcry_error_t   err;
     off_t          bytes;
