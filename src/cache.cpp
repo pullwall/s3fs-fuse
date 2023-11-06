@@ -1,4 +1,4 @@
-/*
+ /*
  * s3fs - FUSE-based file system backed by Amazon S3
  *
  * Copyright(C) 2007 Randy Rizun <rrizun@gmail.com>
@@ -22,7 +22,9 @@
 #include <cerrno>
 #include <cstdlib>
 #include <vector>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "s3fs.h"
 #include "s3fs_logger.h"
 #include "s3fs_util.h"
@@ -35,6 +37,16 @@
 //-------------------------------------------------------------------
 inline void SetStatCacheTime(struct timespec& ts)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(-1 == clock_gettime(static_cast<clockid_t>(CLOCK_MONOTONIC_COARSE), &ts)){
         S3FS_PRN_CRIT("clock_gettime failed: %d", errno);
         abort();
@@ -49,6 +61,16 @@ inline void InitStatCacheTime(struct timespec& ts)
 
 inline int CompareStatCacheTime(const struct timespec& ts1, const struct timespec& ts2)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // return -1:  ts1 < ts2
     //         0:  ts1 == ts2
     //         1:  ts1 > ts2
@@ -68,6 +90,16 @@ inline int CompareStatCacheTime(const struct timespec& ts1, const struct timespe
 
 inline bool IsExpireStatCacheTime(const struct timespec& ts, const time_t& expire)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct timespec nowts;
     SetStatCacheTime(nowts);
     nowts.tv_sec -= expire;
@@ -124,6 +156,16 @@ pthread_mutex_t StatCache::stat_cache_lock;
 //-------------------------------------------------------------------
 StatCache::StatCache() : IsExpireTime(true), IsExpireIntervalType(false), ExpireTime(15 * 60), CacheSize(100000), IsCacheNoObject(true)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(this == StatCache::getStatCacheData()){
         stat_cache.clear();
         pthread_mutexattr_t attr;
@@ -143,6 +185,16 @@ StatCache::StatCache() : IsExpireTime(true), IsExpireIntervalType(false), Expire
 
 StatCache::~StatCache()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(this == StatCache::getStatCacheData()){
         Clear();
         int result = pthread_mutex_destroy(&StatCache::stat_cache_lock);
@@ -160,11 +212,31 @@ StatCache::~StatCache()
 //-------------------------------------------------------------------
 unsigned long StatCache::GetCacheSize() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return CacheSize;
 }
 
 unsigned long StatCache::SetCacheSize(unsigned long size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     unsigned long old = CacheSize;
     CacheSize = size;
     return old;
@@ -172,11 +244,31 @@ unsigned long StatCache::SetCacheSize(unsigned long size)
 
 time_t StatCache::GetExpireTime() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return (IsExpireTime ? ExpireTime : (-1));
 }
 
 time_t StatCache::SetExpireTime(time_t expire, bool is_interval)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     time_t old           = ExpireTime;
     ExpireTime           = expire;
     IsExpireTime         = true;
@@ -186,6 +278,16 @@ time_t StatCache::SetExpireTime(time_t expire, bool is_interval)
 
 time_t StatCache::UnsetExpireTime()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     time_t old           = IsExpireTime ? ExpireTime : (-1);
     ExpireTime           = 0;
     IsExpireTime         = false;
@@ -195,6 +297,16 @@ time_t StatCache::UnsetExpireTime()
 
 bool StatCache::SetCacheNoObject(bool flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = IsCacheNoObject;
     IsCacheNoObject = flag;
     return old;
@@ -202,6 +314,16 @@ bool StatCache::SetCacheNoObject(bool flag)
 
 void StatCache::Clear()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock lock(&StatCache::stat_cache_lock);
 
     stat_cache.clear();
@@ -210,6 +332,16 @@ void StatCache::Clear()
 
 bool StatCache::GetStat(const std::string& key, struct stat* pst, headers_t* meta, bool overcheck, const char* petag, bool* pisforce)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool is_delete_cache = false;
     std::string strpath = key;
 
@@ -292,6 +424,16 @@ bool StatCache::GetStat(const std::string& key, struct stat* pst, headers_t* met
 
 bool StatCache::IsNoObjectCache(const std::string& key, bool overcheck)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool is_delete_cache = false;
     std::string strpath = key;
 
@@ -333,6 +475,16 @@ bool StatCache::IsNoObjectCache(const std::string& key, bool overcheck)
 
 bool StatCache::AddStat(const std::string& key, const headers_t& meta, bool forcedir, bool no_truncate)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!no_truncate && CacheSize< 1){
         return true;
     }
@@ -410,6 +562,16 @@ bool StatCache::AddStat(const std::string& key, const headers_t& meta, bool forc
 //
 bool StatCache::UpdateMetaStats(const std::string& key, const headers_t& meta)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(CacheSize < 1){
         return true;
     }
@@ -450,6 +612,16 @@ bool StatCache::UpdateMetaStats(const std::string& key, const headers_t& meta)
 
 bool StatCache::AddNoObjectCache(const std::string& key)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!IsCacheNoObject){
         return true;    // pretend successful
     }
@@ -503,6 +675,16 @@ bool StatCache::AddNoObjectCache(const std::string& key)
 
 void StatCache::ChangeNoTruncateFlag(const std::string& key, bool no_truncate)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock lock(&StatCache::stat_cache_lock);
     stat_cache_t::iterator iter = stat_cache.find(key);
 
@@ -520,6 +702,16 @@ void StatCache::ChangeNoTruncateFlag(const std::string& key, bool no_truncate)
 
 bool StatCache::TruncateCache()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock lock(&StatCache::stat_cache_lock);
 
     if(stat_cache.empty()){
@@ -578,6 +770,16 @@ bool StatCache::TruncateCache()
 
 bool StatCache::DelStat(const char* key, AutoLock::Type locktype)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!key){
         return false;
     }
@@ -609,6 +811,16 @@ bool StatCache::DelStat(const char* key, AutoLock::Type locktype)
 
 bool StatCache::GetSymlink(const std::string& key, std::string& value)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool is_delete_cache = false;
     const std::string& strpath = key;
 
@@ -643,6 +855,16 @@ bool StatCache::GetSymlink(const std::string& key, std::string& value)
 
 bool StatCache::AddSymlink(const std::string& key, const std::string& value)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(CacheSize< 1){
         return true;
     }
@@ -684,6 +906,16 @@ bool StatCache::AddSymlink(const std::string& key, const std::string& value)
 
 bool StatCache::TruncateSymlink()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock lock(&StatCache::stat_cache_lock);
 
     if(symlink_cache.empty()){
@@ -730,6 +962,16 @@ bool StatCache::TruncateSymlink()
 
 bool StatCache::DelSymlink(const char* key, AutoLock::Type locktype)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!key){
         return false;
     }
@@ -751,6 +993,16 @@ bool StatCache::DelSymlink(const char* key, AutoLock::Type locktype)
 //-------------------------------------------------------------------
 bool convert_header_to_stat(const char* path, const headers_t& meta, struct stat* pst, bool forcedir)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!path || !pst){
         return false;
     }
