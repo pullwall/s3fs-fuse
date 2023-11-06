@@ -24,7 +24,9 @@
 #include <unistd.h>
 #include <sstream>
 #include <sys/stat.h>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "common.h"
 #include "s3fs_logger.h"
 #include "fdcache_page.h"
@@ -42,6 +44,16 @@ static const int CHECK_CACHEFILE_PART_SIZE = 1024 * 16;    // Buffer size in Pag
 // Inline function for repeated processing
 inline void raw_add_compress_fdpage_list(fdpage_list_t& pagelist, const fdpage& orgpage, bool ignore_load, bool ignore_modify, bool default_load, bool default_modify)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(0 < orgpage.bytes){
         // [NOTE]
         // The page variable is subject to change here.
@@ -71,6 +83,16 @@ inline void raw_add_compress_fdpage_list(fdpage_list_t& pagelist, const fdpage& 
 //
 static void raw_compress_fdpage_list(const fdpage_list_t& pages, fdpage_list_t& compressed_pages, bool ignore_load, bool ignore_modify, bool default_load, bool default_modify)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     compressed_pages.clear();
 
     fdpage*                 lastpage = nullptr;
@@ -123,21 +145,61 @@ static void raw_compress_fdpage_list(const fdpage_list_t& pages, fdpage_list_t& 
 
 static void compress_fdpage_list_ignore_modify(const fdpage_list_t& pages, fdpage_list_t& compressed_pages, bool default_modify)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     raw_compress_fdpage_list(pages, compressed_pages, /* ignore_load= */ false, /* ignore_modify= */ true, /* default_load= */false, /* default_modify= */default_modify);
 }
 
 static void compress_fdpage_list_ignore_load(const fdpage_list_t& pages, fdpage_list_t& compressed_pages, bool default_load)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     raw_compress_fdpage_list(pages, compressed_pages, /* ignore_load= */ true, /* ignore_modify= */ false, /* default_load= */default_load, /* default_modify= */false);
 }
 
 static void compress_fdpage_list(const fdpage_list_t& pages, fdpage_list_t& compressed_pages)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     raw_compress_fdpage_list(pages, compressed_pages, /* ignore_load= */ false, /* ignore_modify= */ false, /* default_load= */false, /* default_modify= */false);
 }
 
 static fdpage_list_t parse_partsize_fdpage_list(const fdpage_list_t& pages, off_t max_partsize)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     fdpage_list_t parsed_pages;
     for(fdpage_list_t::const_iterator iter = pages.begin(); iter != pages.end(); ++iter){
         if(iter->modified){
@@ -184,6 +246,16 @@ static fdpage_list_t parse_partsize_fdpage_list(const fdpage_list_t& pages, off_
 //
 bool PageList::GetSparseFilePages(int fd, size_t file_size, fdpage_list_t& sparse_list)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // [NOTE]
     // Express the status of the cache file using fdpage_list_t.
     // There is a hole in the cache file(sparse file), and the
@@ -233,6 +305,16 @@ bool PageList::GetSparseFilePages(int fd, size_t file_size, fdpage_list_t& spars
 //
 bool PageList::CheckZeroAreaInFile(int fd, off_t start, size_t bytes)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::unique_ptr<char[]> readbuff(new char[CHECK_CACHEFILE_PART_SIZE]);
 
     for(size_t comp_bytes = 0, check_bytes = 0; comp_bytes < bytes; comp_bytes += check_bytes){
@@ -274,6 +356,16 @@ bool PageList::CheckZeroAreaInFile(int fd, off_t start, size_t bytes)
 //
 bool PageList::CheckAreaInSparseFile(const struct fdpage& checkpage, const fdpage_list_t& sparse_list, int fd, fdpage_list_t& err_area_list, fdpage_list_t& warn_area_list)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // Check the block status of a part(Check Area: checkpage) of the target file.
     // The elements of sparse_list have 5 patterns that overlap this block area.
     //
@@ -350,27 +442,77 @@ bool PageList::CheckAreaInSparseFile(const struct fdpage& checkpage, const fdpag
 //------------------------------------------------
 void PageList::FreeList(fdpage_list_t& list)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     list.clear();
 }
 
 PageList::PageList(off_t size, bool is_loaded, bool is_modified, bool shrinked) : is_shrink(shrinked)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Init(size, is_loaded, is_modified);
 }
 
 PageList::~PageList()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Clear();
 }
 
 void PageList::Clear()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     PageList::FreeList(pages);
     is_shrink = false;
 }
 
 bool PageList::Init(off_t size, bool is_loaded, bool is_modified)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Clear();
     if(0 <= size){
         fdpage page(0, size, is_loaded, is_modified);
@@ -381,6 +523,16 @@ bool PageList::Init(off_t size, bool is_loaded, bool is_modified)
 
 off_t PageList::Size() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(pages.empty()){
         return 0;
     }
@@ -390,6 +542,16 @@ off_t PageList::Size() const
 
 bool PageList::Compress()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     fdpage* lastpage = nullptr;
     for(fdpage_list_t::iterator iter = pages.begin(); iter != pages.end(); ){
         if(!lastpage){
@@ -427,6 +589,16 @@ bool PageList::Compress()
 
 bool PageList::Parse(off_t new_pos)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     for(fdpage_list_t::iterator iter = pages.begin(); iter != pages.end(); ++iter){
         if(new_pos == iter->offset){
             // nothing to do
@@ -444,6 +616,16 @@ bool PageList::Parse(off_t new_pos)
 
 bool PageList::Resize(off_t size, bool is_loaded, bool is_modified)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     off_t total = Size();
 
     if(0 == total){
@@ -485,6 +667,16 @@ bool PageList::Resize(off_t size, bool is_loaded, bool is_modified)
 
 bool PageList::IsPageLoaded(off_t start, off_t size) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     for(fdpage_list_t::const_iterator iter = pages.begin(); iter != pages.end(); ++iter){
         if(iter->end() < start){
             continue;
@@ -501,6 +693,16 @@ bool PageList::IsPageLoaded(off_t start, off_t size) const
 
 bool PageList::SetPageLoadedStatus(off_t start, off_t size, PageList::page_status pstatus, bool is_compress)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     off_t now_size    = Size();
     bool  is_loaded   = (page_status::LOAD_MODIFIED == pstatus || page_status::LOADED == pstatus);
     bool  is_modified = (page_status::LOAD_MODIFIED == pstatus || page_status::MODIFIED == pstatus);
@@ -542,6 +744,16 @@ bool PageList::SetPageLoadedStatus(off_t start, off_t size, PageList::page_statu
 
 bool PageList::FindUnloadedPage(off_t start, off_t& resstart, off_t& ressize) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     for(fdpage_list_t::const_iterator iter = pages.begin(); iter != pages.end(); ++iter){
         if(start <= iter->end()){
             if(!iter->loaded && !iter->modified){     // Do not load unloaded and modified areas
@@ -560,6 +772,16 @@ bool PageList::FindUnloadedPage(off_t start, off_t& resstart, off_t& ressize) co
 //
 off_t PageList::GetTotalUnloadedPageSize(off_t start, off_t size, off_t limit_size) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // If size is 0, it means loading to end.
     if(0 == size){
         if(start < Size()){
@@ -601,6 +823,16 @@ off_t PageList::GetTotalUnloadedPageSize(off_t start, off_t size, off_t limit_si
 
 size_t PageList::GetUnloadedPages(fdpage_list_t& unloaded_list, off_t start, off_t size) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // If size is 0, it means loading to end.
     if(0 == size){
         if(start < Size()){
@@ -647,6 +879,16 @@ size_t PageList::GetUnloadedPages(fdpage_list_t& unloaded_list, off_t start, off
 //
 bool PageList::GetPageListsForMultipartUpload(fdpage_list_t& dlpages, fdpage_list_t& mixuppages, off_t max_partsize)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // compress before this processing
     Compress();         // always true
 
@@ -748,6 +990,16 @@ bool PageList::GetPageListsForMultipartUpload(fdpage_list_t& dlpages, fdpage_lis
 
 bool PageList::GetNoDataPageLists(fdpage_list_t& nodata_pages, off_t start, size_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // compress before this processing
     Compress();         // always true
 
@@ -785,6 +1037,16 @@ bool PageList::GetNoDataPageLists(fdpage_list_t& nodata_pages, off_t start, size
 
 off_t PageList::BytesModified() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     off_t total = 0;
     for(fdpage_list_t::const_iterator iter = pages.begin(); iter != pages.end(); ++iter){
         if(iter->modified){
@@ -796,6 +1058,16 @@ off_t PageList::BytesModified() const
 
 bool PageList::IsModified() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(is_shrink){
         return true;
     }
@@ -809,6 +1081,16 @@ bool PageList::IsModified() const
 
 bool PageList::ClearAllModified()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     is_shrink = false;
 
     for(fdpage_list_t::iterator iter = pages.begin(); iter != pages.end(); ++iter){
@@ -821,6 +1103,16 @@ bool PageList::ClearAllModified()
 
 bool PageList::Serialize(CacheFileStat& file, bool is_output, ino_t inode)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!file.Open()){
         return false;
     }
@@ -973,6 +1265,16 @@ bool PageList::Serialize(CacheFileStat& file, bool is_output, ino_t inode)
 
 void PageList::Dump() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     int cnt = 0;
 
     S3FS_PRN_DBG("pages (shrinked=%s) = {", (is_shrink ? "yes" : "no"));
@@ -994,6 +1296,16 @@ void PageList::Dump() const
 // 
 bool PageList::CompareSparseFile(int fd, size_t file_size, fdpage_list_t& err_area_list, fdpage_list_t& warn_area_list)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     err_area_list.clear();
     warn_area_list.clear();
 
