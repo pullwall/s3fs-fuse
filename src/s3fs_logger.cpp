@@ -23,6 +23,9 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <iostream>
+#include <ostream>
+#include <fstream>
 
 #include "common.h"
 #include "s3fs_logger.h"
