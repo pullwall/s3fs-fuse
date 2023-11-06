@@ -229,6 +229,16 @@ std::string get_canonical_headers(const struct curl_slist* list, bool only_amz)
 // function for using global values
 bool MakeUrlResource(const char* realpath, std::string& resourcepath, std::string& url)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!realpath){
         return false;
     }
@@ -289,6 +299,16 @@ std::string prepare_url(const char* url)
 
 bool make_md5_from_binary(const char* pstr, size_t length, std::string& md5)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!pstr || '\0' == pstr[0]){
         S3FS_PRN_ERR("Parameter is wrong.");
         return false;
