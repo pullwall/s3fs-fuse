@@ -29,6 +29,10 @@
 #include "s3fs_auth.h"
 #include "string_util.h"
 
+#include <iostream>
+#include <ostream>
+#include <fstream>
+
 //-------------------------------------------------------------------
 // Global variables
 //-------------------------------------------------------------------
@@ -39,6 +43,16 @@ utility_incomp_type utility_mode = utility_incomp_type::NO_UTILITY_MODE;
 //-------------------------------------------------------------------
 static void print_incomp_mpu_list(const incomp_mpu_list_t& list)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     printf("\n");
     printf("Lists the parts that have been uploaded for a specific multipart upload.\n");
     printf("\n");
@@ -62,6 +76,16 @@ static void print_incomp_mpu_list(const incomp_mpu_list_t& list)
 
 static bool abort_incomp_mpu_list(const incomp_mpu_list_t& list, time_t abort_time)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(list.empty()){
         return true;
     }
@@ -100,6 +124,16 @@ static bool abort_incomp_mpu_list(const incomp_mpu_list_t& list, time_t abort_ti
 
 int s3fs_utility_processing(time_t abort_time)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(utility_incomp_type::NO_UTILITY_MODE == utility_mode){
         return EXIT_FAILURE;
     }
