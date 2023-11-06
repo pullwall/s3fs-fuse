@@ -29,6 +29,9 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
+#include <iostream>
+#include <ostream>
+#include <fstream>
 
 #include <string>
 #include <sstream>
@@ -52,6 +55,16 @@ static size_t max_group_name_length;
 //-------------------------------------------------------------------
 std::string get_realpath(const char *path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string realpath = mount_prefix;
     realpath += path;
 
@@ -60,6 +73,16 @@ std::string get_realpath(const char *path)
 
 void init_sysconf_vars()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // SUSv4tc1 says the following about _SC_GETGR_R_SIZE_MAX and
     // _SC_GETPW_R_SIZE_MAX:
     // Note that sysconf(_SC_GETGR_R_SIZE_MAX) may return -1 if
@@ -93,6 +116,16 @@ void init_sysconf_vars()
 // get user name from uid
 std::string get_username(uid_t uid)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     size_t maxlen = max_password_size;
     int result;
     struct passwd pwinfo;
@@ -121,6 +154,16 @@ std::string get_username(uid_t uid)
 
 int is_uid_include_group(uid_t uid, gid_t gid)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     size_t maxlen = max_group_name_length;
     int result;
     struct group ginfo;
@@ -171,6 +214,16 @@ static pthread_mutex_t* pbasename_lock = nullptr;
 
 bool init_basename_lock()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(pbasename_lock){
         S3FS_PRN_ERR("already initialized mutex for posix dirname/basename function.");
         return false;
@@ -195,6 +248,16 @@ bool init_basename_lock()
 
 bool destroy_basename_lock()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!pbasename_lock){
         S3FS_PRN_ERR("the mutex for posix dirname/basename function is not initialized.");
         return false;
@@ -212,6 +275,16 @@ bool destroy_basename_lock()
 
 std::string mydirname(const std::string& path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(pbasename_lock);
 
     return mydirname(path.c_str());
@@ -221,6 +294,16 @@ std::string mydirname(const std::string& path)
 // dirname clobbers path so let it operate on a tmp copy
 std::string mydirname(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!path || '\0' == path[0]){
         return "";
     }
@@ -233,6 +316,16 @@ std::string mydirname(const char* path)
 
 std::string mybasename(const std::string& path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(pbasename_lock);
 
     return mybasename(path.c_str());
@@ -242,6 +335,16 @@ std::string mybasename(const std::string& path)
 // basename clobbers path so let it operate on a tmp copy
 std::string mybasename(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!path || '\0' == path[0]){
         return "";
     }
@@ -255,6 +358,16 @@ std::string mybasename(const char* path)
 // mkdir --parents
 int mkdirp(const std::string& path, mode_t mode)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string        base;
     std::string        component;
     std::istringstream ss(path);
@@ -278,6 +391,16 @@ int mkdirp(const std::string& path, mode_t mode)
 // get existed directory path
 std::string get_exist_directory_path(const std::string& path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string        existed("/");    // "/" is existed.
     std::string        base;
     std::string        component;
@@ -299,6 +422,16 @@ std::string get_exist_directory_path(const std::string& path)
 
 bool check_exist_dir_permission(const char* dirpath)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!dirpath || '\0' == dirpath[0]){
         return false;
     }
@@ -346,6 +479,16 @@ bool check_exist_dir_permission(const char* dirpath)
 
 bool delete_files_in_dir(const char* dir, bool is_remove_own)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     DIR*           dp;
     struct dirent* dent;
 
@@ -396,6 +539,16 @@ bool delete_files_in_dir(const char* dir, bool is_remove_own)
 //-------------------------------------------------------------------
 bool compare_sysname(const char* target)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // [NOTE]
     // The buffer size of sysname member in struct utsname is
     // OS dependent, but 512 bytes is sufficient for now.
@@ -426,6 +579,16 @@ bool compare_sysname(const char* target)
 //-------------------------------------------------------------------
 void print_launch_message(int argc, char** argv)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string  message = short_version();
 
     if(argv){
@@ -456,6 +619,16 @@ const struct timespec S3FS_OMIT_TS = {0, UTIME_OMIT};
 //
 int compare_timespec(const struct timespec& ts1, const struct timespec& ts2)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(ts1.tv_sec < ts2.tv_sec){
         return -1;
     }else if(ts1.tv_sec > ts2.tv_sec){
@@ -477,6 +650,16 @@ int compare_timespec(const struct timespec& ts1, const struct timespec& ts2)
 //
 int compare_timespec(const struct stat& st, stat_time_type type, const struct timespec& ts)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct timespec st_ts;
     set_stat_to_timespec(st, type, st_ts);
 
@@ -485,6 +668,16 @@ int compare_timespec(const struct stat& st, stat_time_type type, const struct ti
 
 void set_timespec_to_stat(struct stat& st, stat_time_type type, const struct timespec& ts)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(stat_time_type::ATIME == type){
         #if defined(__APPLE__)
             st.st_atime             = ts.tv_sec;
@@ -547,6 +740,16 @@ struct timespec* set_stat_to_timespec(const struct stat& st, stat_time_type type
 
 std::string str_stat_time(const struct stat& st, stat_time_type type)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct timespec ts;
     return str(*set_stat_to_timespec(st, type, ts));
 }
@@ -563,12 +766,32 @@ struct timespec* s3fs_realtime(struct timespec& ts)
 
 std::string s3fs_str_realtime()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct timespec ts;
     return str(*s3fs_realtime(ts));
 }
 
 int s3fs_fclose(FILE* fp)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(fp == nullptr){
         return 0;
     }
