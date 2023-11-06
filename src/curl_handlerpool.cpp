@@ -19,7 +19,9 @@
  */
 
 #include <cstdio>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "s3fs_logger.h"
 #include "curl_handlerpool.h"
 #include "autolock.h"
@@ -73,6 +75,16 @@ bool CurlHandlerPool::Destroy()
 
 CURL* CurlHandlerPool::GetHandler(bool only_pool)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock lock(&mLock);
 
     CURL* hCurl = nullptr;
@@ -94,6 +106,16 @@ CURL* CurlHandlerPool::GetHandler(bool only_pool)
 
 void CurlHandlerPool::ReturnHandler(CURL* hCurl, bool restore_pool)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!hCurl){
       return;
     }
@@ -119,6 +141,16 @@ void CurlHandlerPool::ReturnHandler(CURL* hCurl, bool restore_pool)
 
 void CurlHandlerPool::ResetHandler(CURL* hCurl)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!hCurl){
       return;
     }
