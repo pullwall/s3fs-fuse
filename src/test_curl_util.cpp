@@ -24,6 +24,10 @@
 #include "curl_util.h"
 #include "test_util.h"
 
+#include <iostream>
+#include <ostream>
+#include <fstream>
+
 //---------------------------------------------------------
 // S3fsCred Stub
 //
@@ -56,6 +60,16 @@ const std::string& S3fsCred::GetBucket()
 
 void assert_is_sorted(struct curl_slist* list, const char *file, int line)
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     for(; list != nullptr; list = list->next){
         std::string key1 = list->data;
         key1.erase(key1.find(':'));
@@ -82,6 +96,16 @@ size_t curl_slist_length(const struct curl_slist* list)
 
 void test_sort_insert()
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct curl_slist* list = nullptr;
     ASSERT_IS_SORTED(list);
     // add to head
@@ -107,6 +131,16 @@ void test_sort_insert()
 
 void test_slist_remove()
 {
+	std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct curl_slist* list = nullptr;
 
     // remove no elements
