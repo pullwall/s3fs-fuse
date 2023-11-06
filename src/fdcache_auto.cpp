@@ -38,6 +38,16 @@ AutoFdEntity::~AutoFdEntity()
 
 bool AutoFdEntity::Close()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(pFdEntity){
         if(!FdManager::get()->Close(pFdEntity, pseudo_fd)){
             S3FS_PRN_ERR("Failed to close fdentity.");
@@ -55,6 +65,16 @@ bool AutoFdEntity::Close()
 //
 int AutoFdEntity::Detach()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!pFdEntity){
         S3FS_PRN_ERR("Does not have a associated FdEntity.");
         return -1;
@@ -68,6 +88,16 @@ int AutoFdEntity::Detach()
 
 FdEntity* AutoFdEntity::Attach(const char* path, int existfd)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Close();
 
     if(nullptr == (pFdEntity = FdManager::get()->GetFdEntity(path, existfd, false))){
@@ -80,6 +110,16 @@ FdEntity* AutoFdEntity::Attach(const char* path, int existfd)
 
 FdEntity* AutoFdEntity::Open(const char* path, const headers_t* pmeta, off_t size, const struct timespec& ts_mctime, int flags, bool force_tmpfile, bool is_create, bool ignore_modify, AutoLock::Type type, int* error)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Close();
 
     if(nullptr == (pFdEntity = FdManager::get()->Open(pseudo_fd, path, pmeta, size, ts_mctime, flags, force_tmpfile, is_create, ignore_modify, type))){
@@ -97,6 +137,16 @@ FdEntity* AutoFdEntity::Open(const char* path, const headers_t* pmeta, off_t siz
 //
 FdEntity* AutoFdEntity::GetExistFdEntity(const char* path, int existfd)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Close();
 
     FdEntity* ent;
@@ -108,6 +158,16 @@ FdEntity* AutoFdEntity::GetExistFdEntity(const char* path, int existfd)
 
 FdEntity* AutoFdEntity::OpenExistFdEntity(const char* path, int flags)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Close();
 
     if(nullptr == (pFdEntity = FdManager::get()->OpenExistFdEntity(path, pseudo_fd, flags))){
