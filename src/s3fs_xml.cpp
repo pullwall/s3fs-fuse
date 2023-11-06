@@ -21,6 +21,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <libxml/xpathInternals.h>
+#include <iostream>
+#include <ostream>
+#include <fstream>
 
 #include "common.h"
 #include "s3fs.h"
@@ -46,6 +49,16 @@ static pthread_mutex_t* pxml_parser_mutex = nullptr;
 //-------------------------------------------------------------------
 static bool GetXmlNsUrl(xmlDocPtr doc, std::string& nsurl)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool result = false;
 
     if(!pxml_parser_mutex || !doc){
@@ -88,6 +101,16 @@ static bool GetXmlNsUrl(xmlDocPtr doc, std::string& nsurl)
 
 static unique_ptr_xmlChar get_base_exp(xmlDocPtr doc, const char* exp)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string xmlnsurl;
     std::string exp_string;
 
@@ -121,16 +144,46 @@ static unique_ptr_xmlChar get_base_exp(xmlDocPtr doc, const char* exp)
 
 static unique_ptr_xmlChar get_prefix(xmlDocPtr doc)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return get_base_exp(doc, "Prefix");
 }
 
 unique_ptr_xmlChar get_next_continuation_token(xmlDocPtr doc)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return get_base_exp(doc, "NextContinuationToken");
 }
 
 unique_ptr_xmlChar get_next_marker(xmlDocPtr doc)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return get_base_exp(doc, "NextMarker");
 }
 
@@ -139,6 +192,16 @@ unique_ptr_xmlChar get_next_marker(xmlDocPtr doc)
 //         nullptr(a case of something error occurred)
 static char* get_object_name(xmlDocPtr doc, xmlNodePtr node, const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // Get full path
     unique_ptr_xmlChar fullpath(xmlNodeListGetString(doc, node, 1), xmlFree);
     if(!fullpath){
@@ -204,6 +267,16 @@ static char* get_object_name(xmlDocPtr doc, xmlNodePtr node, const char* path)
 
 static unique_ptr_xmlChar get_exp_value_xml(xmlDocPtr doc, xmlXPathContextPtr ctx, const char* exp_key)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!doc || !ctx || !exp_key){
         return {nullptr, xmlFree};
     }
@@ -233,6 +306,16 @@ static unique_ptr_xmlChar get_exp_value_xml(xmlDocPtr doc, xmlXPathContextPtr ct
 
 bool get_incomp_mpu_list(xmlDocPtr doc, incomp_mpu_list_t& list)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!doc){
         return false;
     }
@@ -309,6 +392,16 @@ bool get_incomp_mpu_list(xmlDocPtr doc, incomp_mpu_list_t& list)
 
 bool is_truncated(xmlDocPtr doc)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     unique_ptr_xmlChar strTruncate(get_base_exp(doc, "IsTruncated"));
     if(!strTruncate){
         return false;
@@ -318,6 +411,16 @@ bool is_truncated(xmlDocPtr doc)
 
 int append_objects_from_xml_ex(const char* path, xmlDocPtr doc, xmlXPathContextPtr ctx, const char* ex_contents, const char* ex_key, const char* ex_etag, int isCPrefix, S3ObjList& head, bool prefix)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     xmlNodeSetPtr content_nodes;
 
     unique_ptr_xmlXPathObject contents_xp(xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>(ex_contents), ctx), xmlXPathFreeObject);
@@ -397,6 +500,16 @@ int append_objects_from_xml_ex(const char* path, xmlDocPtr doc, xmlXPathContextP
 
 int append_objects_from_xml(const char* path, xmlDocPtr doc, S3ObjList& head)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string xmlnsurl;
     std::string ex_contents = "//";
     std::string ex_key;
@@ -443,6 +556,16 @@ int append_objects_from_xml(const char* path, xmlDocPtr doc, S3ObjList& head)
 //-------------------------------------------------------------------
 bool simple_parse_xml(const char* data, size_t len, const char* key, std::string& value)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool result = false;
 
     if(!data || !key){
@@ -488,6 +611,16 @@ bool simple_parse_xml(const char* data, size_t len, const char* key, std::string
 //-------------------------------------------------------------------
 bool init_parser_xml_lock()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(pxml_parser_mutex){
         return false;
     }
@@ -509,6 +642,16 @@ bool init_parser_xml_lock()
 
 bool destroy_parser_xml_lock()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!pxml_parser_mutex){
         return false;
     }
