@@ -22,10 +22,24 @@
 #include "fdcache_stat.h"
 #include "test_util.h"
 
+#include <iostream>
+#include <ostream>
+#include <fstream>
+
 bool CacheFileStat::Open() { return false; }
 
 void test_compress()
 {
+  std::string logMessage = std::string(__func__) + " function is called.\n";
+  std::string logFilePath = "/s3fs_logs/log.txt";
+  std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+  if (logFile.is_open()) {
+      logFile << logMessage;
+      logFile.close();
+  } else {
+      std::cerr << "Unable to open log file." << std::endl;
+  }
   PageList list;
   ASSERT_EQUALS(off_t(0), list.Size());
 
