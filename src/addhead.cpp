@@ -48,16 +48,6 @@ AdditionalHeader AdditionalHeader::singleton;
 //-------------------------------------------------------------------
 AdditionalHeader::AdditionalHeader()
 {
-    std::string logMessage = std::string(__func__) + " function is called.\n";
-    std::string logFilePath = "/s3fs_logs/log.txt";
-    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
-
-    if (logFile.is_open()) {
-        logFile << logMessage;
-        logFile.close();
-    } else {
-        std::cerr << "Unable to open log file." << std::endl;
-    }
     if(this == AdditionalHeader::get()){
         is_enable = false;
     }else{
@@ -67,16 +57,6 @@ AdditionalHeader::AdditionalHeader()
 
 AdditionalHeader::~AdditionalHeader()
 {
-    std::string logMessage = std::string(__func__) + " function is called.\n";
-    std::string logFilePath = "/s3fs_logs/log.txt";
-    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
-
-    if (logFile.is_open()) {
-        logFile << logMessage;
-        logFile.close();
-    } else {
-        std::cerr << "Unable to open log file." << std::endl;
-    }
     if(this == AdditionalHeader::get()){
         Unload();
     }else{
