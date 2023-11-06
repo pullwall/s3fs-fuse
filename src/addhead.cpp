@@ -25,6 +25,8 @@
 #include <fstream>
 #include <strings.h>
 #include <vector>
+#include <iostream>
+#include <ostream>
 
 #include "s3fs.h"
 #include "addhead.h"
@@ -46,6 +48,16 @@ AdditionalHeader AdditionalHeader::singleton;
 //-------------------------------------------------------------------
 AdditionalHeader::AdditionalHeader()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(this == AdditionalHeader::get()){
         is_enable = false;
     }else{
@@ -55,6 +67,16 @@ AdditionalHeader::AdditionalHeader()
 
 AdditionalHeader::~AdditionalHeader()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(this == AdditionalHeader::get()){
         Unload();
     }else{
@@ -64,6 +86,16 @@ AdditionalHeader::~AdditionalHeader()
 
 bool AdditionalHeader::Load(const char* file)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!file){
         S3FS_PRN_WARN("file is nullptr.");
         return false;
@@ -142,6 +174,16 @@ bool AdditionalHeader::Load(const char* file)
 
 void AdditionalHeader::Unload()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     is_enable = false;
 
     addheadlist.clear();
@@ -149,6 +191,16 @@ void AdditionalHeader::Unload()
 
 bool AdditionalHeader::AddHeader(headers_t& meta, const char* path) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!is_enable){
         return true;
     }
@@ -189,6 +241,16 @@ bool AdditionalHeader::AddHeader(headers_t& meta, const char* path) const
 
 struct curl_slist* AdditionalHeader::AddHeader(struct curl_slist* list, const char* path) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     headers_t meta;
 
     if(!AddHeader(meta, path)){
@@ -205,6 +267,16 @@ struct curl_slist* AdditionalHeader::AddHeader(struct curl_slist* list, const ch
 
 bool AdditionalHeader::Dump() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!S3fsLog::IsS3fsLogDbg()){
         return true;
     }
