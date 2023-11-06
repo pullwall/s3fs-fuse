@@ -58,6 +58,16 @@ const char* s3fs_crypt_lib_name()
 //-------------------------------------------------------------------
 bool s3fs_init_global_ssl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     ERR_load_crypto_strings();
 
     // [NOTE]
@@ -73,6 +83,16 @@ bool s3fs_init_global_ssl()
 
 bool s3fs_destroy_global_ssl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     EVP_cleanup();
     ERR_free_strings();
     return true;
