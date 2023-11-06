@@ -21,7 +21,9 @@
 #include <algorithm>
 #include <cstdlib>
 #include <vector>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "s3fs_logger.h"
 #include "fdcache_pseudofd.h"
 #include "autolock.h"
@@ -40,17 +42,47 @@ static const int MIN_PSEUDOFD_NUMBER = 2;
 //------------------------------------------------
 PseudoFdManager& PseudoFdManager::GetManager()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     static PseudoFdManager singleton;
     return singleton;
 }
 
 int PseudoFdManager::Get()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return (PseudoFdManager::GetManager()).CreatePseudoFd();
 }
 
 bool PseudoFdManager::Release(int fd)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return (PseudoFdManager::GetManager()).ReleasePseudoFd(fd);
 }
 
@@ -59,6 +91,16 @@ bool PseudoFdManager::Release(int fd)
 //------------------------------------------------
 PseudoFdManager::PseudoFdManager() : is_lock_init(false)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     pthread_mutexattr_t attr;
     pthread_mutexattr_init(&attr);
 #if S3FS_PTHREAD_ERRORCHECK
@@ -74,6 +116,16 @@ PseudoFdManager::PseudoFdManager() : is_lock_init(false)
 
 PseudoFdManager::~PseudoFdManager()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(is_lock_init){
       int result;
       if(0 != (result = pthread_mutex_destroy(&pseudofd_list_lock))){
@@ -86,6 +138,16 @@ PseudoFdManager::~PseudoFdManager()
 
 int PseudoFdManager::GetUnusedMinPseudoFd() const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     int min_fd = MIN_PSEUDOFD_NUMBER;
 
     // Look for the first discontinuous value.
@@ -101,6 +163,16 @@ int PseudoFdManager::GetUnusedMinPseudoFd() const
 
 int PseudoFdManager::CreatePseudoFd()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&pseudofd_list_lock);
 
     int new_fd = PseudoFdManager::GetUnusedMinPseudoFd();
@@ -112,6 +184,16 @@ int PseudoFdManager::CreatePseudoFd()
 
 bool PseudoFdManager::ReleasePseudoFd(int fd)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock auto_lock(&pseudofd_list_lock);
 
     for(pseudofd_list_t::iterator iter = pseudofd_list.begin(); iter != pseudofd_list.end(); ++iter){
