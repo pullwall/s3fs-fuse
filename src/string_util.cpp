@@ -29,6 +29,10 @@
 #include "s3fs_logger.h"
 #include "string_util.h"
 
+#include <iostream>
+#include <ostream>
+#include <fstream>
+
 //-------------------------------------------------------------------
 // Global variables
 //-------------------------------------------------------------------
@@ -56,6 +60,16 @@ std::string str(const struct timespec value)
  */
 char* strptime(const char* s, const char* f, struct tm* tm)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::istringstream input(s);
     input.imbue(std::locale(setlocale(LC_ALL, nullptr)));
     input >> std::get_time(tm, f);
@@ -68,6 +82,16 @@ char* strptime(const char* s, const char* f, struct tm* tm)
 
 bool s3fs_strtoofft(off_t* value, const char* str, int base)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(value == nullptr || str == nullptr){
         return false;
     }
@@ -88,6 +112,16 @@ bool s3fs_strtoofft(off_t* value, const char* str, int base)
 
 off_t cvt_strtoofft(const char* str, int base)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     off_t result = 0;
     if(!s3fs_strtoofft(&result, str, base)){
         S3FS_PRN_WARN("something error is occurred in convert std::string(%s) to off_t, thus return 0 as default.", (str ? str : "null"));
@@ -98,6 +132,16 @@ off_t cvt_strtoofft(const char* str, int base)
 
 std::string lower(std::string s)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // change each character of the std::string to lower case
     for(size_t i = 0; i < s.length(); i++){
         s[i] = tolower(s[i]);
@@ -153,6 +197,16 @@ static const char* encode_query_except_chars   = ".-_~=&%"; // For query params(
 
 static std::string rawUrlEncode(const std::string &s, const char* except_chars)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string result;
     for (size_t i = 0; i < s.length(); ++i) {
         unsigned char c = s[i];
@@ -187,6 +241,16 @@ std::string urlEncodeQuery(const std::string &s)
 
 std::string urlDecode(const std::string& s)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string result;
     for(size_t i = 0; i < s.length(); ++i){
         if(s[i] != '%'){
@@ -210,6 +274,16 @@ std::string urlDecode(const std::string& s)
 
 bool takeout_str_dquart(std::string& str)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     size_t pos;
 
     // '"' for start
@@ -233,6 +307,16 @@ bool takeout_str_dquart(std::string& str)
 //
 bool get_keyword_value(const std::string& target, const char* keyword, std::string& value)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!keyword){
         return false;
     }
@@ -292,6 +376,16 @@ std::string get_date_iso8601(time_t tm)
 
 bool get_unixtime_from_iso8601(const char* pdate, time_t& unixtime)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!pdate){
         return false;
     }
@@ -312,6 +406,16 @@ bool get_unixtime_from_iso8601(const char* pdate, time_t& unixtime)
 //
 bool convert_unixtime_from_option_arg(const char* argv, time_t& unixtime)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!argv){
       return false;
     }
@@ -361,6 +465,16 @@ bool convert_unixtime_from_option_arg(const char* argv, time_t& unixtime)
 
 static std::string s3fs_hex(const unsigned char* input, size_t length, const char *hexAlphabet)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string hex;
     for(size_t pos = 0; pos < length; ++pos){
         hex += hexAlphabet[input[pos] / 16];
@@ -381,6 +495,16 @@ std::string s3fs_hex_upper(const unsigned char* input, size_t length)
 
 std::string s3fs_base64(const unsigned char* input, size_t length)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     static const char base[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
     std::string result;
@@ -405,6 +529,16 @@ std::string s3fs_base64(const unsigned char* input, size_t length)
 
 inline unsigned char char_decode64(const char ch)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     unsigned char by;
     if('A' <= ch && ch <= 'Z'){                   // A - Z
         by = static_cast<unsigned char>(ch - 'A');
@@ -426,6 +560,16 @@ inline unsigned char char_decode64(const char ch)
 
 std::string s3fs_decode64(const char* input, size_t input_len)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string result;
     result.reserve(input_len / 4 * 3);
     unsigned char parts[4];
@@ -536,6 +680,16 @@ bool s3fs_wtf8_encode(const char *s, std::string *result)
 
 std::string s3fs_wtf8_encode(const std::string &s)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string result;
     s3fs_wtf8_encode(s.c_str(), &result);
     return result;
@@ -545,6 +699,16 @@ std::string s3fs_wtf8_encode(const std::string &s)
 // The code assumes that we map to a three-byte code point.
 bool s3fs_wtf8_decode(const char *s, std::string *result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool encoded = false;
     for (; *s; s++) {
         unsigned char c = *s;
@@ -572,6 +736,16 @@ bool s3fs_wtf8_decode(const char *s, std::string *result)
  
 std::string s3fs_wtf8_decode(const std::string &s)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string result;
     s3fs_wtf8_decode(s.c_str(), &result);
     return result;
@@ -598,6 +772,16 @@ std::string s3fs_wtf8_decode(const std::string &s)
 //
 std::string get_encoded_cr_code(const char* pbase)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string result;
     if(!pbase){
         return result;
@@ -628,6 +812,16 @@ std::string get_encoded_cr_code(const char* pbase)
 //
 std::string get_decoded_cr_code(const char* pencode)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string result;
     if(!pencode){
         return result;
