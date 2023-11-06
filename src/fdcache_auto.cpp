@@ -19,7 +19,9 @@
  */
 
 #include <cstdio>
-
+#include <iostream>
+#include <ostream>
+#include <fstream>
 #include "s3fs_logger.h"
 #include "fdcache_auto.h"
 #include "fdcache.h"
