@@ -142,6 +142,16 @@ std::string      S3fsCurl::proxy_userpwd;
 //-------------------------------------------------------------------
 bool S3fsCurl::InitS3fsCurl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     pthread_mutexattr_t attr;
     pthread_mutexattr_init(&attr);
 #if S3FS_PTHREAD_ERRORCHECK
@@ -183,6 +193,16 @@ bool S3fsCurl::InitS3fsCurl()
 
 bool S3fsCurl::DestroyS3fsCurl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool result = true;
 
     if(!S3fsCurl::DestroyCryptMutex()){
@@ -216,6 +236,16 @@ bool S3fsCurl::DestroyS3fsCurl()
 
 bool S3fsCurl::InitGlobalCurl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsCurl::is_initglobal_done){
         return false;
     }
@@ -229,6 +259,16 @@ bool S3fsCurl::InitGlobalCurl()
 
 bool S3fsCurl::DestroyGlobalCurl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!S3fsCurl::is_initglobal_done){
         return false;
     }
@@ -239,6 +279,16 @@ bool S3fsCurl::DestroyGlobalCurl()
 
 bool S3fsCurl::InitShareCurl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     CURLSHcode nSHCode;
 
     if(!S3fsCurl::is_dns_cache && !S3fsCurl::is_ssl_session_cache){
@@ -288,6 +338,16 @@ bool S3fsCurl::InitShareCurl()
 
 bool S3fsCurl::DestroyShareCurl()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!S3fsCurl::hCurlShare){
         if(!S3fsCurl::is_dns_cache && !S3fsCurl::is_ssl_session_cache){
             return true;
@@ -304,6 +364,16 @@ bool S3fsCurl::DestroyShareCurl()
 
 void S3fsCurl::LockCurlShare(CURL* handle, curl_lock_data nLockData, curl_lock_access laccess, void* useptr)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!hCurlShare){
         return;
     }
@@ -354,11 +424,31 @@ void S3fsCurl::UnlockCurlShare(CURL* handle, curl_lock_data nLockData, void* use
 
 bool S3fsCurl::InitCryptMutex()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return s3fs_init_crypt_mutex();
 }
 
 bool S3fsCurl::DestroyCryptMutex()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return s3fs_destroy_crypt_mutex();
 }
 
@@ -400,6 +490,16 @@ int S3fsCurl::CurlProgress(void *clientp, double dltotal, double dlnow, double u
 
 bool S3fsCurl::InitCredentialObject(S3fsCred* pcredobj)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // Set the only Credential object
     if(!pcredobj || S3fsCurl::ps3fscred){
         S3FS_PRN_ERR("Unable to set the only Credential object.");
@@ -412,6 +512,16 @@ bool S3fsCurl::InitCredentialObject(S3fsCred* pcredobj)
 
 bool S3fsCurl::InitMimeType(const std::string& strFile)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string MimeFile;
     if(!strFile.empty()){
         MimeFile = strFile;
@@ -564,6 +674,16 @@ std::string S3fsCurl::LookupMimeType(const std::string& name)
 
 bool S3fsCurl::LocateBundle()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // See if environment variable CURL_CA_BUNDLE is set
     // if so, check it, if it is a good path, then set the
     // curl_ca_bundle variable to it
@@ -805,6 +925,16 @@ size_t S3fsCurl::DownloadWriteCallback(void* ptr, size_t size, size_t nmemb, voi
 
 bool S3fsCurl::SetCheckCertificate(bool isCertCheck)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
       bool old = S3fsCurl::is_cert_check;
       S3fsCurl::is_cert_check = isCertCheck;
       return old;
@@ -812,6 +942,16 @@ bool S3fsCurl::SetCheckCertificate(bool isCertCheck)
 
 bool S3fsCurl::SetDnsCache(bool isCache)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = S3fsCurl::is_dns_cache;
     S3fsCurl::is_dns_cache = isCache;
     return old;
@@ -835,6 +975,16 @@ void S3fsCurl::ResetOffset(S3fsCurl* pCurl)
 
 bool S3fsCurl::SetSslSessionCache(bool isCache)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = S3fsCurl::is_ssl_session_cache;
     S3fsCurl::is_ssl_session_cache = isCache;
     return old;
@@ -842,6 +992,16 @@ bool S3fsCurl::SetSslSessionCache(bool isCache)
 
 long S3fsCurl::SetConnectTimeout(long timeout)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     long old = S3fsCurl::connect_timeout;
     S3fsCurl::connect_timeout = timeout;
     return old;
@@ -886,6 +1046,16 @@ int S3fsCurl::SetRetries(int count)
 
 bool S3fsCurl::SetPublicBucket(bool flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = S3fsCurl::is_public_bucket;
     S3fsCurl::is_public_bucket = flag;
     return old;
@@ -944,6 +1114,16 @@ std::string S3fsCurl::SetStorageClass(const std::string& storage_class)
 
 bool S3fsCurl::PushbackSseKeys(const std::string& input)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string onekey = trim(input);
     if(onekey.empty()){
         return false;
@@ -997,6 +1177,16 @@ sse_type_t S3fsCurl::SetSseType(sse_type_t type)
 
 bool S3fsCurl::SetSseCKeys(const char* filepath)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!filepath){
         S3FS_PRN_ERR("SSE-C keys filepath is empty.");
         return false;
@@ -1032,6 +1222,16 @@ bool S3fsCurl::SetSseCKeys(const char* filepath)
 
 bool S3fsCurl::SetSseKmsid(const char* kmsid)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!kmsid || '\0' == kmsid[0]){
         S3FS_PRN_ERR("SSE-KMS kms id is empty.");
         return false;
@@ -1045,6 +1245,16 @@ bool S3fsCurl::SetSseKmsid(const char* kmsid)
 // this function check the integrity of the SSE data finally.
 bool S3fsCurl::FinalCheckSse()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     switch(S3fsCurl::ssetype){
         case sse_type_t::SSE_DISABLE:
             S3fsCurl::ssekmsid.erase();
@@ -1077,6 +1287,16 @@ bool S3fsCurl::FinalCheckSse()
                                                                                                                                                    
 bool S3fsCurl::LoadEnvSseCKeys()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     char* envkeys = getenv("AWSSSECKEYS");
     if(nullptr == envkeys){
         // nothing to do
@@ -1101,6 +1321,16 @@ bool S3fsCurl::LoadEnvSseCKeys()
 
 bool S3fsCurl::LoadEnvSseKmsid()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     const char* envkmsid = getenv("AWSSSEKMSID");
     if(nullptr == envkmsid){
         // nothing to do
@@ -1114,6 +1344,16 @@ bool S3fsCurl::LoadEnvSseKmsid()
 //
 bool S3fsCurl::GetSseKey(std::string& md5, std::string& ssekey)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     for(sseckeylist_t::const_iterator iter = S3fsCurl::sseckeys.begin(); iter != S3fsCurl::sseckeys.end(); ++iter){
         if(md5.empty() || md5 == (*iter).begin()->first){
             md5    = iter->begin()->first;
@@ -1126,6 +1366,16 @@ bool S3fsCurl::GetSseKey(std::string& md5, std::string& ssekey)
 
 bool S3fsCurl::GetSseKeyMd5(size_t pos, std::string& md5)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsCurl::sseckeys.size() <= static_cast<size_t>(pos)){
         return false;
     }
@@ -1159,6 +1409,16 @@ size_t S3fsCurl::GetSseKeyCount()
 
 bool S3fsCurl::SetContentMd5(bool flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = S3fsCurl::is_content_md5;
     S3fsCurl::is_content_md5 = flag;
     return old;
@@ -1166,6 +1426,16 @@ bool S3fsCurl::SetContentMd5(bool flag)
 
 bool S3fsCurl::SetVerbose(bool flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = S3fsCurl::is_verbose;
     S3fsCurl::is_verbose = flag;
     return old;
@@ -1173,6 +1443,16 @@ bool S3fsCurl::SetVerbose(bool flag)
 
 bool S3fsCurl::SetDumpBody(bool flag)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = S3fsCurl::is_dump_body;
     S3fsCurl::is_dump_body = flag;
     return old;
@@ -1201,6 +1481,16 @@ long S3fsCurl::SetSslVerifyHostname(long value)
 
 bool S3fsCurl::SetMultipartSize(off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     size = size * 1024 * 1024;
     if(size < MIN_MULTIPART_SIZE){
         return false;
@@ -1211,6 +1501,16 @@ bool S3fsCurl::SetMultipartSize(off_t size)
 
 bool S3fsCurl::SetMultipartCopySize(off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     size = size * 1024 * 1024;
     if(size < MIN_MULTIPART_SIZE){
         return false;
@@ -1270,6 +1570,16 @@ int S3fsCurl::SetMaxMultiRequest(int max)
 //
 bool S3fsCurl::SetProxy(const char* url)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!url || '\0' == url[0]){
         return false;
     }
@@ -1330,6 +1640,16 @@ bool S3fsCurl::SetProxy(const char* url)
 //
 bool S3fsCurl::SetProxyUserPwd(const char* file)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!file || '\0' == file[0]){
         return false;
     }
@@ -1388,6 +1708,16 @@ bool S3fsCurl::SetProxyUserPwd(const char* file)
 // cppcheck-suppress constParameterCallback
 bool S3fsCurl::UploadMultipartPostCallback(S3fsCurl* s3fscurl, void* param)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fscurl || param){     // this callback does not need a parameter
         return false;
     }
@@ -1400,6 +1730,16 @@ bool S3fsCurl::UploadMultipartPostCallback(S3fsCurl* s3fscurl, void* param)
 // cppcheck-suppress constParameterCallback
 bool S3fsCurl::MixMultipartPostCallback(S3fsCurl* s3fscurl, void* param)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fscurl || param){     // this callback does not need a parameter
         return false;
     }
@@ -1969,6 +2309,16 @@ int S3fsCurl::ParallelGetObjectRequest(const char* tpath, int fd, off_t start, o
 
 bool S3fsCurl::UploadMultipartPostSetCurlOpts(S3fsCurl* s3fscurl)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fscurl){
         return false;
     }
@@ -2011,6 +2361,16 @@ bool S3fsCurl::UploadMultipartPostSetCurlOpts(S3fsCurl* s3fscurl)
 
 bool S3fsCurl::CopyMultipartPostSetCurlOpts(S3fsCurl* s3fscurl)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fscurl){
         return false;
     }
@@ -2048,6 +2408,16 @@ bool S3fsCurl::CopyMultipartPostSetCurlOpts(S3fsCurl* s3fscurl)
 
 bool S3fsCurl::PreGetObjectRequestSetCurlOpts(S3fsCurl* s3fscurl)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fscurl){
         return false;
     }
@@ -2073,6 +2443,16 @@ bool S3fsCurl::PreGetObjectRequestSetCurlOpts(S3fsCurl* s3fscurl)
 
 bool S3fsCurl::PreHeadRequestSetCurlOpts(S3fsCurl* s3fscurl)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fscurl){
         return false;
     }
@@ -2106,6 +2486,16 @@ bool S3fsCurl::PreHeadRequestSetCurlOpts(S3fsCurl* s3fscurl)
 
 bool S3fsCurl::AddUserAgent(CURL* hCurl)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!hCurl){
         return false;
     }
@@ -2264,6 +2654,16 @@ S3fsCurl::~S3fsCurl()
 
 bool S3fsCurl::ResetHandle(AutoLock::Type locktype)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool run_once;
     {
         AutoLock lock(&S3fsCurl::curl_warnings_lock);
@@ -2364,6 +2764,16 @@ bool S3fsCurl::ResetHandle(AutoLock::Type locktype)
 
 bool S3fsCurl::CreateCurlHandle(bool only_pool, bool remake)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     AutoLock lock(&S3fsCurl::curl_handles_lock);
 
     if(hCurl && remake){
@@ -2394,6 +2804,16 @@ bool S3fsCurl::CreateCurlHandle(bool only_pool, bool remake)
 
 bool S3fsCurl::DestroyCurlHandle(bool restore_pool, bool clear_internal_data, AutoLock::Type locktype)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // [NOTE]
     // If type is REQTYPE::IAMCRED or REQTYPE::IAMROLE, do not clear type.
     // Because that type only uses HTTP protocol, then the special
@@ -2422,6 +2842,16 @@ bool S3fsCurl::DestroyCurlHandle(bool restore_pool, bool clear_internal_data, Au
 
 bool S3fsCurl::ClearInternalData()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // Always clear internal data
     //
     type        = REQTYPE::UNSET;
@@ -2458,6 +2888,16 @@ bool S3fsCurl::ClearInternalData()
 
 bool S3fsCurl::SetUseAhbe(bool ahbe)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool old = is_use_ahbe;
     is_use_ahbe = ahbe;
     return old;
@@ -2465,6 +2905,16 @@ bool S3fsCurl::SetUseAhbe(bool ahbe)
 
 bool S3fsCurl::GetResponseCode(long& responseCode, bool from_curl_handle) const
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     responseCode = -1;
 
     if(!from_curl_handle){
@@ -2486,6 +2936,16 @@ bool S3fsCurl::GetResponseCode(long& responseCode, bool from_curl_handle) const
 //
 bool S3fsCurl::RemakeHandle()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("Retry request. [type=%d][url=%s][path=%s]", static_cast<int>(type), url.c_str(), path.c_str());
 
     if(REQTYPE::UNSET == type){
@@ -3190,6 +3650,16 @@ std::string S3fsCurl::CalcSignature(const std::string& method, const std::string
 
 void S3fsCurl::insertV4Headers(const std::string& access_key_id, const std::string& secret_access_key, const std::string& access_token)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string server_path = type == REQTYPE::LISTBUCKET ? "/" : path;
     std::string payload_hash;
     switch (type) {
@@ -3252,6 +3722,17 @@ void S3fsCurl::insertV4Headers(const std::string& access_key_id, const std::stri
 
 void S3fsCurl::insertV2Headers(const std::string& access_key_id, const std::string& secret_access_key, const std::string& access_token)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
+    
     std::string resource;
     std::string turl;
     std::string server_path = type == REQTYPE::LISTBUCKET ? "/" : path;
@@ -3442,6 +3923,16 @@ int S3fsCurl::GetIAMv2ApiToken(const char* token_url, int token_ttl, const char*
 //
 bool S3fsCurl::GetIAMCredentials(const char* cred_url, const char* iam_v2_token, const char* ibm_secret_access_key, std::string& response)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!cred_url){
         S3FS_PRN_ERR("url is null.");
         return false;
@@ -3528,6 +4019,16 @@ bool S3fsCurl::GetIAMCredentials(const char* cred_url, const char* iam_v2_token,
 //
 bool S3fsCurl::GetIAMRoleFromMetaData(const char* cred_url, const char* iam_v2_token, std::string& token)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!cred_url){
         S3FS_PRN_ERR("url is null.");
         return false;
@@ -3583,6 +4084,16 @@ bool S3fsCurl::GetIAMRoleFromMetaData(const char* cred_url, const char* iam_v2_t
 
 bool S3fsCurl::AddSseRequestHead(sse_type_t ssetype, const std::string& input, bool is_copy)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string ssevalue = input;
     switch(ssetype){
         case sse_type_t::SSE_DISABLE:
@@ -3634,6 +4145,16 @@ bool S3fsCurl::AddSseRequestHead(sse_type_t ssetype, const std::string& input, b
 //
 bool S3fsCurl::PreHeadRequest(const char* tpath, const char* bpath, const char* savedpath, size_t ssekey_pos)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     S3FS_PRN_INFO3("[tpath=%s][bpath=%s][save=%s][sseckeypos=%zu]", SAFESTRPTR(tpath), SAFESTRPTR(bpath), SAFESTRPTR(savedpath), ssekey_pos);
 
     if(!tpath){
@@ -3672,6 +4193,16 @@ bool S3fsCurl::PreHeadRequest(const char* tpath, const char* bpath, const char* 
 
 int S3fsCurl::HeadRequest(const char* tpath, headers_t& meta)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     int result = -1;
 
     S3FS_PRN_INFO3("[tpath=%s]", SAFESTRPTR(tpath));
@@ -4773,6 +5304,16 @@ int S3fsCurl::CopyMultipartPostSetup(const char* from, const char* to, int part_
 
 bool S3fsCurl::UploadMultipartPostComplete()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     headers_t::iterator it = responseHeaders.find("ETag");
     if (it == responseHeaders.end()) {
         return false;
@@ -4802,6 +5343,16 @@ bool S3fsCurl::UploadMultipartPostComplete()
 // cppcheck-suppress constParameterCallback
 bool S3fsCurl::CopyMultipartPostCallback(S3fsCurl* s3fscurl, void* param)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fscurl || param){     // this callback does not need a parameter
         return false;
     }
@@ -4813,6 +5364,16 @@ bool S3fsCurl::CopyMultipartPostCallback(S3fsCurl* s3fscurl, void* param)
 
 bool S3fsCurl::CopyMultipartPostComplete()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     std::string etag;
     partdata.uploaded = simple_parse_xml(bodydata.c_str(), bodydata.size(), "ETag", etag);
     partdata.petag->etag = peeloff(etag);
@@ -4825,6 +5386,16 @@ bool S3fsCurl::CopyMultipartPostComplete()
 
 bool S3fsCurl::MixMultipartPostComplete()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool result;
     if(-1 == partdata.fd){
         result = CopyMultipartPostComplete();
