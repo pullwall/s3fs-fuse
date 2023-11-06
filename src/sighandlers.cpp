@@ -21,6 +21,9 @@
 #include <cstdio>
 #include <csignal>
 #include <pthread.h>
+#include <iostream>
+#include <ostream>
+#include <fstream>
 
 #include "s3fs_logger.h"
 #include "sighandlers.h"
@@ -37,6 +40,16 @@ bool S3fsSignals::enableUsr1         = false;
 //-------------------------------------------------------------------
 bool S3fsSignals::Initialize()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!S3fsSignals::pSingleton){
         S3fsSignals::pSingleton = new S3fsSignals;
     }
@@ -45,6 +58,16 @@ bool S3fsSignals::Initialize()
 
 bool S3fsSignals::Destroy()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     delete S3fsSignals::pSingleton;
     S3fsSignals::pSingleton = nullptr;
     return true;
@@ -52,6 +75,16 @@ bool S3fsSignals::Destroy()
 
 void S3fsSignals::HandlerUSR1(int sig)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(SIGUSR1 != sig){
         S3FS_PRN_ERR("The handler for SIGUSR1 received signal(%d)", sig);
         return;
@@ -71,6 +104,16 @@ void S3fsSignals::HandlerUSR1(int sig)
 
 bool S3fsSignals::SetUsr1Handler(const char* path)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!FdManager::HaveLseekHole()){
         S3FS_PRN_ERR("Could not set SIGUSR1 for checking cache, because this system does not support SEEK_DATA/SEEK_HOLE in lseek function.");
         return false;
@@ -89,6 +132,16 @@ bool S3fsSignals::SetUsr1Handler(const char* path)
 
 void* S3fsSignals::CheckCacheWorker(void* arg)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     Semaphore* pSem   = static_cast<Semaphore*>(arg);
     if(!pSem){
         pthread_exit(nullptr);
@@ -123,6 +176,16 @@ void* S3fsSignals::CheckCacheWorker(void* arg)
 
 void S3fsSignals::HandlerUSR2(int sig)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(SIGUSR2 == sig){
         S3fsLog::BumpupLogLevel();
     }else{
@@ -132,6 +195,16 @@ void S3fsSignals::HandlerUSR2(int sig)
 
 bool S3fsSignals::InitUsr2Handler()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct sigaction sa;
 
     memset(&sa, 0, sizeof(struct sigaction));
@@ -145,6 +218,16 @@ bool S3fsSignals::InitUsr2Handler()
 
 void S3fsSignals::HandlerHUP(int sig)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(SIGHUP == sig){
         S3fsLog::ReopenLogfile();
     }else{
@@ -154,6 +237,16 @@ void S3fsSignals::HandlerHUP(int sig)
 
 bool S3fsSignals::InitHupHandler()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct sigaction sa;
 
     memset(&sa, 0, sizeof(struct sigaction));
@@ -170,6 +263,16 @@ bool S3fsSignals::InitHupHandler()
 //-------------------------------------------------------------------
 S3fsSignals::S3fsSignals() : pThreadUsr1(nullptr), pSemUsr1(nullptr)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsSignals::enableUsr1){
         if(!InitUsr1Handler()){
             S3FS_PRN_ERR("failed creating thread for SIGUSR1 handler, but continue...");
@@ -185,6 +288,16 @@ S3fsSignals::S3fsSignals() : pThreadUsr1(nullptr), pSemUsr1(nullptr)
 
 S3fsSignals::~S3fsSignals()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(S3fsSignals::enableUsr1){
         if(!DestroyUsr1Handler()){
             S3FS_PRN_ERR("failed stopping thread for SIGUSR1 handler, but continue...");
@@ -194,6 +307,16 @@ S3fsSignals::~S3fsSignals()
 
 bool S3fsSignals::InitUsr1Handler()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(pThreadUsr1 || pSemUsr1){
         S3FS_PRN_ERR("Already run thread for SIGUSR1");
         return false;
@@ -228,6 +351,16 @@ bool S3fsSignals::InitUsr1Handler()
 
 bool S3fsSignals::DestroyUsr1Handler()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!pThreadUsr1 || !pSemUsr1){
         return false;
     }
@@ -254,6 +387,16 @@ bool S3fsSignals::DestroyUsr1Handler()
 
 bool S3fsSignals::WakeupUsr1Thread()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!pThreadUsr1 || !pSemUsr1){
         S3FS_PRN_ERR("The thread for SIGUSR1 is not setup.");
         return false;
