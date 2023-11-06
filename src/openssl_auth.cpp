@@ -39,6 +39,10 @@
 #include "s3fs_auth.h"
 #include "s3fs_logger.h"
 
+#include <iostream>
+#include <ostream>
+#include <fstream>
+
 //-------------------------------------------------------------------
 // Utility Function for version
 //-------------------------------------------------------------------
@@ -88,6 +92,16 @@ static pthread_mutex_t* s3fs_crypt_mutex = nullptr;
 static void s3fs_crypt_mutex_lock(int mode, int pos, const char* file, int line) __attribute__ ((unused));
 static void s3fs_crypt_mutex_lock(int mode, int pos, const char* file, int line)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(s3fs_crypt_mutex){
         int result;
         if(mode & CRYPTO_LOCK){
@@ -107,6 +121,16 @@ static void s3fs_crypt_mutex_lock(int mode, int pos, const char* file, int line)
 static unsigned long s3fs_crypt_get_threadid() __attribute__ ((unused));
 static unsigned long s3fs_crypt_get_threadid()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     // For FreeBSD etc, some system's pthread_t is structure pointer.
     // Then we use cast like C style(not C++) instead of ifdef.
     return (unsigned long)(pthread_self());
@@ -115,6 +139,16 @@ static unsigned long s3fs_crypt_get_threadid()
 static struct CRYPTO_dynlock_value* s3fs_dyn_crypt_mutex(const char* file, int line) __attribute__ ((unused));
 static struct CRYPTO_dynlock_value* s3fs_dyn_crypt_mutex(const char* file, int line)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct CRYPTO_dynlock_value* dyndata = new CRYPTO_dynlock_value();
     pthread_mutexattr_t attr;
     pthread_mutexattr_init(&attr);
@@ -132,6 +166,16 @@ static struct CRYPTO_dynlock_value* s3fs_dyn_crypt_mutex(const char* file, int l
 static void s3fs_dyn_crypt_mutex_lock(int mode, struct CRYPTO_dynlock_value* dyndata, const char* file, int line) __attribute__ ((unused));
 static void s3fs_dyn_crypt_mutex_lock(int mode, struct CRYPTO_dynlock_value* dyndata, const char* file, int line)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(dyndata){
         int result;
         if(mode & CRYPTO_LOCK){
@@ -151,6 +195,16 @@ static void s3fs_dyn_crypt_mutex_lock(int mode, struct CRYPTO_dynlock_value* dyn
 static void s3fs_destroy_dyn_crypt_mutex(struct CRYPTO_dynlock_value* dyndata, const char* file, int line) __attribute__ ((unused));
 static void s3fs_destroy_dyn_crypt_mutex(struct CRYPTO_dynlock_value* dyndata, const char* file, int line)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(dyndata){
       int result = pthread_mutex_destroy(&(dyndata->dyn_mutex));
       if(result != 0){
@@ -163,6 +217,16 @@ static void s3fs_destroy_dyn_crypt_mutex(struct CRYPTO_dynlock_value* dyndata, c
 
 bool s3fs_init_crypt_mutex()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(s3fs_crypt_mutex){
         S3FS_PRN_DBG("s3fs_crypt_mutex is not nullptr, destroy it.");
 
@@ -199,6 +263,16 @@ bool s3fs_init_crypt_mutex()
 
 bool s3fs_destroy_crypt_mutex()
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!s3fs_crypt_mutex){
         return true;
     }
@@ -228,6 +302,16 @@ bool s3fs_destroy_crypt_mutex()
 //-------------------------------------------------------------------
 static std::unique_ptr<unsigned char[]> s3fs_HMAC_RAW(const void* key, size_t keylen, const unsigned char* data, size_t datalen, unsigned int* digestlen, bool is_sha256)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     if(!key || !data || !digestlen){
         return nullptr;
     }
@@ -263,6 +347,16 @@ std::unique_ptr<unsigned char[]> s3fs_HMAC256(const void* key, size_t keylen, co
 
 bool s3fs_md5(const unsigned char* data, size_t datalen, md5_t* digest)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     unsigned int digestlen = static_cast<unsigned int>(digest->size());
 
     const EVP_MD* md    = EVP_get_digestbyname("md5");
@@ -277,6 +371,16 @@ bool s3fs_md5(const unsigned char* data, size_t datalen, md5_t* digest)
 
 bool s3fs_md5_fd(int fd, off_t start, off_t size, md5_t* result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     EVP_MD_CTX*    mdctx;
     unsigned int   md5_digest_len = static_cast<unsigned int>(result->size());
     off_t          bytes;
@@ -326,6 +430,16 @@ bool s3fs_md5_fd(int fd, off_t start, off_t size, md5_t* result)
 // TODO: Does this fail on OpenSSL < 3.0 and we need to use MD5_CTX functions?
 bool s3fs_md5(const unsigned char* data, size_t datalen, md5_t* digest)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     unsigned int digestlen = digest->size();
 
     const EVP_MD* md    = EVP_get_digestbyname("md5");
@@ -340,6 +454,16 @@ bool s3fs_md5(const unsigned char* data, size_t datalen, md5_t* digest)
 
 bool s3fs_md5_fd(int fd, off_t start, off_t size, md5_t* result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     MD5_CTX md5ctx;
     off_t   bytes;
 
@@ -380,6 +504,16 @@ bool s3fs_md5_fd(int fd, off_t start, off_t size, md5_t* result)
 //-------------------------------------------------------------------
 bool s3fs_sha256(const unsigned char* data, size_t datalen, sha256_t* digest)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     const EVP_MD* md    = EVP_get_digestbyname("sha256");
     EVP_MD_CTX*   mdctx = EVP_MD_CTX_create();
     EVP_DigestInit_ex(mdctx, md, nullptr);
@@ -393,6 +527,16 @@ bool s3fs_sha256(const unsigned char* data, size_t datalen, sha256_t* digest)
 
 bool s3fs_sha256_fd(int fd, off_t start, off_t size, sha256_t* result)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     const EVP_MD*  md = EVP_get_digestbyname("sha256");
     EVP_MD_CTX*    sha256ctx;
     off_t          bytes;
