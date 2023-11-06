@@ -27,6 +27,10 @@
 #include "metaheader.h"
 #include "string_util.h"
 
+#include <iostream>
+#include <ostream>
+#include <fstream>
+
 static const struct timespec DEFAULT_TIMESPEC = {-1, 0};
 
 //-------------------------------------------------------------------
@@ -108,11 +112,31 @@ struct timespec get_atime(const headers_t& meta, bool overcheck)
 
 off_t get_size(const char *s)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return cvt_strtoofft(s, /*base=*/ 10);
 }
 
 off_t get_size(const headers_t& meta)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     headers_t::const_iterator iter = meta.find("Content-Length");
     if(meta.end() == iter){
         return 0;
@@ -122,11 +146,31 @@ off_t get_size(const headers_t& meta)
 
 mode_t get_mode(const char *s, int base)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return static_cast<mode_t>(cvt_strtoofft(s, base));
 }
 
 mode_t get_mode(const headers_t& meta, const std::string& strpath, bool checkdir, bool forcedir)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     mode_t mode     = 0;
     bool   isS3sync = false;
     headers_t::const_iterator iter;
@@ -207,11 +251,31 @@ mode_t get_mode(const headers_t& meta, const std::string& strpath, bool checkdir
 
 uid_t get_uid(const char *s)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return static_cast<uid_t>(cvt_strtoofft(s, /*base=*/ 0));
 }
 
 uid_t get_uid(const headers_t& meta)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     headers_t::const_iterator iter;
     if(meta.end() != (iter = meta.find("x-amz-meta-uid"))){
         return get_uid((*iter).second.c_str());
@@ -226,11 +290,31 @@ uid_t get_uid(const headers_t& meta)
 
 gid_t get_gid(const char *s)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return static_cast<gid_t>(cvt_strtoofft(s, /*base=*/ 0));
 }
 
 gid_t get_gid(const headers_t& meta)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     headers_t::const_iterator iter;
     if(meta.end() != (iter = meta.find("x-amz-meta-gid"))){
         return get_gid((*iter).second.c_str());
@@ -245,11 +329,31 @@ gid_t get_gid(const headers_t& meta)
 
 blkcnt_t get_blocks(off_t size)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     return (size / 512) + (0 == (size % 512) ? 0 : 1);
 }
 
 time_t cvtIAMExpireStringToTime(const char* s)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct tm tm;
     if(!s){
         return 0L;
@@ -261,6 +365,16 @@ time_t cvtIAMExpireStringToTime(const char* s)
 
 time_t get_lastmodified(const char* s)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     struct tm tm;
     if(!s){
         return -1;
@@ -272,6 +386,16 @@ time_t get_lastmodified(const char* s)
 
 time_t get_lastmodified(const headers_t& meta)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     headers_t::const_iterator iter = meta.find("Last-Modified");
     if(meta.end() == iter){
         return -1;
@@ -286,6 +410,16 @@ time_t get_lastmodified(const headers_t& meta)
 //
 bool is_need_check_obj_detail(const headers_t& meta)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     headers_t::const_iterator iter;
 
     // directory object is Content-Length as 0.
@@ -321,6 +455,16 @@ bool is_need_check_obj_detail(const headers_t& meta)
 //
 bool merge_headers(headers_t& base, const headers_t& additional, bool add_noexist)
 {
+    std::string logMessage = std::string(__func__) + " function is called.\n";
+    std::string logFilePath = "/s3fs_logs/log.txt";
+    std::ofstream logFile(logFilePath, std::ios::out | std::ios::app);
+
+    if (logFile.is_open()) {
+        logFile << logMessage;
+        logFile.close();
+    } else {
+        std::cerr << "Unable to open log file." << std::endl;
+    }
     bool added = false;
     for(headers_t::const_iterator iter = additional.begin(); iter != additional.end(); ++iter){
         if(add_noexist || base.find(iter->first) != base.end()){
