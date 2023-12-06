@@ -26,7 +26,7 @@
 #include <limits.h>
 #include <sys/stat.h>
 #include <chrono>               /////////
-#include "StatFile.h"  		//////// Include the header file for StatFile
+#include "statfile.h"  		//////// Include the header file for StatFile
 
 #include "common.h"
 #include "fdcache_entity.h"
