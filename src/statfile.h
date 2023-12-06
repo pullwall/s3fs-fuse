@@ -1,5 +1,6 @@
 #ifndef STATFILE_H
 #define STATFILE_H
+#include <string>
 
 class FileUploadStats {
 public:
