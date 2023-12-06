@@ -2710,7 +2710,7 @@ int S3fsCurl::RequestPerform(bool dontAddAuthHeaders /*=false*/)
     }
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
-    S3FS_PRN_INFO3("File upload time: %lld milliseconds", duration.count());
+    S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());
     
     return result;
 }
