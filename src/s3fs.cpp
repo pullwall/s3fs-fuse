@@ -28,6 +28,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <getopt.h>
+#include <chrono>               /////////
 
 #include "common.h"
 #include "s3fs.h"
@@ -2930,6 +2931,8 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
 {
     WTF8_ENCODE(path)
     ssize_t res;
+    auto start_time = std::chrono::high_resolution_clock::now();            /////////////
+    bool file_upload = true;                                                /////////////
     S3FS_PRN_INFO3("------------ s3fs_write");                              ///////
     FUSE_CTX_DBG("[path=%s][size=%zu][offset=%lld][pseudo_fd=%llu]", path, size, static_cast<long long int>(offset), (unsigned long long)(fi->fh));
 
@@ -2956,6 +2959,12 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
             S3FS_PRN_WARN("could not punching HOLEs to a cache file, but continue.");
         }
     }
+    //file_upload = false;                                                /////////////
+    auto end_time = std::chrono::high_resolution_clock::now();                                          /////////////
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
+    S3FS_PRN_INFO3("s3fs_write - File upload time: %ld milliseconds", duration.count());                            /////////
+    if(file_upload) {                                                                                  /////////////
+        S3FS_PRN_INFO3("s3fs_write[if] - File upload time: %ld milliseconds", duration.count());  }                       /////////////
     return static_cast<int>(res);
 }
 
