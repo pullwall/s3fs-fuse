@@ -28,6 +28,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <getopt.h>
+#include <chrono.h>
 
 #include "common.h"
 #include "s3fs.h"
