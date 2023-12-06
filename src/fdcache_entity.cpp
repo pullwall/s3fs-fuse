@@ -26,6 +26,7 @@
 #include <limits.h>
 #include <sys/stat.h>
 #include <chrono>               /////////
+#include "StatFile.h"  		//////// Include the header file for StatFile
 
 #include "common.h"
 #include "fdcache_entity.h"
@@ -1473,6 +1474,10 @@ int FdEntity::RowFlush(int fd, const char* tpath, AutoLock::Type type, bool forc
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
     if(file_upload) {                                                                                  /////////////
         S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());  }                       /////////////
+    // Update statistics in StatFile								/////////////
+    StatFile& statFileInstance = StatFile::getInstance();					/////////////
+    statFileInstance.uploadFile(tpath);								/////////////
+
     return result;
 }
 // [NOTE]
