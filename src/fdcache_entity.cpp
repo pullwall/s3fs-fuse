@@ -1116,7 +1116,7 @@ int FdEntity::Load(off_t start, off_t size, AutoLock::Type type, bool is_modifie
         }
         auto end_time = std::chrono::high_resolution_clock::now();                                          /////////////
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
-        if(file_upload) {                                                                                   /////////////
+        if(file_download) {                                                                                   /////////////
             S3FS_PRN_INFO3("File download time: %ld milliseconds", duration.count()); }                        /////////////
           // Set loaded flag
           pagelist.SetPageLoadedStatus(iter->offset, iter->bytes, (is_modified_flag ? PageList::page_status::LOAD_MODIFIED : PageList::page_status::LOADED));
