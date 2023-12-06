@@ -28,7 +28,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <getopt.h>
-#include "statfile.h"                    //////////
+#include "statfile.h"           //////////
 
 #include "common.h"
 #include "s3fs.h"
@@ -2901,6 +2901,7 @@ static int s3fs_open(const char* _path, struct fuse_file_info* fi)
 
 static int s3fs_read(const char* _path, char* buf, size_t size, off_t offset, struct fuse_file_info* fi)
 {
+    S3FS_PRN_INFO3("-------------------- s3fs_read");                              ///////
     WTF8_ENCODE(path)
     ssize_t res;
 
@@ -2923,6 +2924,10 @@ static int s3fs_read(const char* _path, char* buf, size_t size, off_t offset, st
     if(0 > (res = ent->Read(static_cast<int>(fi->fh), buf, offset, size, false))){
         S3FS_PRN_WARN("failed to read file(%s). result=%zd", path, res);
     }
+
+    long downloadSize = size;/* calculated download size */
+    StatFile::IncrementDownloadCount();
+    StatFile::PrintStatsToFile("/stat.txt");
 
     return static_cast<int>(res);
 }
@@ -2958,7 +2963,11 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
             S3FS_PRN_WARN("could not punching HOLEs to a cache file, but continue.");
         }
     }
-    StatFile::PrintStats();                         ///////////
+
+    long uploadSize = size;/* calculated upload size */
+    StatFile::IncrementUploadCount();
+    StatFile::PrintStatsToFile("/stat.txt");
+
     return static_cast<int>(res);
 }
 
