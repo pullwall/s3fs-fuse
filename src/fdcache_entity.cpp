@@ -1110,20 +1110,25 @@ int FdEntity::Load(off_t start, off_t size, AutoLock::Type type, bool is_modifie
                 }else{
                     result = 0;
                 }
-        }
+            }
           if(0 != result){
             file_download = true;                                                /////////////
               break;
-        }
-        auto end_time = std::chrono::high_resolution_clock::now();                                          /////////////
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
-        if(file_download) {                                                                                   /////////////
-            S3FS_PRN_INFO3("File download time: %ld milliseconds", duration.count()); }                        /////////////
+            }
+            auto end_time = std::chrono::high_resolution_clock::now();                                          /////////////
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
+            if(file_download) {                                                                                   /////////////
+                S3FS_PRN_INFO3("File download time: %ld milliseconds", duration.count()); }                        /////////////
+        
+            long downloadTime = duration.count() /* calculated download time */;                                                  /////////////
+            StatFile::UpdateDownloadStats(downloadTime);                                     /////////////
+
           // Set loaded flag
           pagelist.SetPageLoadedStatus(iter->offset, iter->bytes, (is_modified_flag ? PageList::page_status::LOAD_MODIFIED : PageList::page_status::LOADED));
         }
         PageList::FreeList(unloaded_list);
     }
+    
     return result;
 }
 
@@ -1475,20 +1480,9 @@ int FdEntity::RowFlush(int fd, const char* tpath, AutoLock::Type type, bool forc
     if(file_upload) {                                                                                  /////////////
         S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());  }                       /////////////
     
-    long uploadTime =  duration.count() /* calculated upload time */;               /////////
-    //long uploadSize = /* calculated upload size */;
-    //long downloadTime = /* calculated download time */;
-    //long downloadSize = /* calculated download size */;
-
-     // Update stats
-    //StatFile::IncrementUploadCount();
-    StatFile::UpdateUploadTimeStats(uploadTime);                        ////////////
-
-    //StatFile::IncrementDownloadCount();
-    //StatFile::UpdateDownloadStats(downloadTime, downloadSize);
-
-    StatFile::PrintStats();
-    StatFile::PrintStatsToFile("/stat.txt");
+    
+    long uploadTime =  duration.count(); /* calculated upload time */
+    StatFile::UpdateUploadTimeStats(uploadTime);
 
     return result;
 }
