@@ -22,9 +22,9 @@ public:
 
     void UpdateUploadSizeStats(long uploadSize);
 
-    void UpdateDownloadStats(long downloadTime, long downloadSize);
+    void UpdateDownloadTimeStats(long downloadTime);
 
-    void PrintStats();
+    void UpdateDownloadSizeStats(long downloadSize);
 
     void PrintStatsToFile(const std::string& filename);
 };
@@ -41,9 +41,9 @@ public:
 
     static void UpdateUploadSizeStats(long uploadSize);
 
-    static void UpdateDownloadStats(long downloadTime, long downloadSize);
+    static void UpdateDownloadTimeStats(long downloadTime);
 
-    static void PrintStats();
+    static void UpdateDownloadSizeStats(long downloadSize);
 
     static void PrintStatsToFile(const std::string& filename);
 };
