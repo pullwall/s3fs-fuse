@@ -2963,6 +2963,7 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
     }
     auto end_time = std::chrono::high_resolution_clock::now();                                          /////////////
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
+    S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());                              ///////
     if(file_upload) {                                                                                  /////////////
         S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());  }                       /////////////
     return static_cast<int>(res);
