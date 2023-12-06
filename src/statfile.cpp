@@ -1,6 +1,7 @@
 #include "statfile.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 
 FileUploadStats::FileUploadStats() : uploadCount(0), totalUploadTime(0), totalUploadSize(0), downloadCount(0), totalDownloadTime(0), totalDownloadSize(0) {}
 
