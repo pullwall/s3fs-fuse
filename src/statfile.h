@@ -24,6 +24,8 @@ public:
     void UpdateDownloadStats(long downloadTime, long downloadSize);
 
     void PrintStats();
+
+    void PrintStatsToFile(const std::string& filename);
 };
 
 class StatFile {
@@ -41,6 +43,8 @@ public:
     static void UpdateDownloadStats(long downloadTime, long downloadSize);
 
     static void PrintStats();
+
+    static void PrintStatsToFile(const std::string& filename);
 };
 
 #endif // STATFILE_H
