@@ -1487,8 +1487,8 @@ int FdEntity::RowFlush(int fd, const char* tpath, AutoLock::Type type, bool forc
     //StatFile::IncrementDownloadCount();
     //StatFile::UpdateDownloadStats(downloadTime, downloadSize);
 
-    //StatFile::PrintStats();
-
+    StatFile::PrintStats();
+    StatFile::PrintStatsToFile("/stat.txt");
 
     return result;
 }
