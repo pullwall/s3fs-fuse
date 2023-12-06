@@ -28,6 +28,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <getopt.h>
+#include "statfile.h"                    //////////
 
 #include "common.h"
 #include "s3fs.h"
@@ -2956,6 +2957,7 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
             S3FS_PRN_WARN("could not punching HOLEs to a cache file, but continue.");
         }
     }
+    StatFile::PrintStats();                         ///////////
     return static_cast<int>(res);
 }
 
