@@ -1412,6 +1412,10 @@ off_t FdEntity::BytesModified()
 //
 int FdEntity::RowFlush(int fd, const char* tpath, AutoLock::Type type, bool force_sync)
 {
+    
+    auto start_time = std::chrono::high_resolution_clock::now();            /////////////
+    bool file_upload = true;                                                /////////////
+
     AutoLock auto_lock(&fdent_lock, type);
 
     S3FS_PRN_INFO3("[tpath=%s][path=%s][pseudo_fd=%d][physical_fd=%d]", SAFESTRPTR(tpath), path.c_str(), fd, physical_fd);
@@ -1464,10 +1468,14 @@ int FdEntity::RowFlush(int fd, const char* tpath, AutoLock::Type type, bool forc
     if(0 != result && !cachepath.empty()){
         FdManager::DeleteCacheFile(tpath);
     }
-
+    //file_upload = false;                                                /////////////
+    auto end_time = std::chrono::high_resolution_clock::now();                                          /////////////
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
+    S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());                              ///////
+    if(file_upload) {                                                                                  /////////////
+        S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());  }                       /////////////
     return result;
 }
-
 // [NOTE]
 // Both fdent_lock and fdent_data_lock must be locked before calling.
 //
