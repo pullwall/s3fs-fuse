@@ -1412,7 +1412,7 @@ off_t FdEntity::BytesModified()
 //
 int FdEntity::RowFlush(int fd, const char* tpath, AutoLock::Type type, bool force_sync)
 {
-    
+    S3FS_PRN_INFO3("RowFlush");                              ///////
     auto start_time = std::chrono::high_resolution_clock::now();            /////////////
     bool file_upload = true;                                                /////////////
 
@@ -1471,7 +1471,6 @@ int FdEntity::RowFlush(int fd, const char* tpath, AutoLock::Type type, bool forc
     //file_upload = false;                                                /////////////
     auto end_time = std::chrono::high_resolution_clock::now();                                          /////////////
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
-    S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());                              ///////
     if(file_upload) {                                                                                  /////////////
         S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());  }                       /////////////
     return result;
