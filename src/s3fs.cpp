@@ -1175,6 +1175,7 @@ static int s3fs_mknod(const char *_path, mode_t mode, dev_t rdev)
 
 static int s3fs_create(const char* _path, mode_t mode, struct fuse_file_info* fi)
 {
+    S3FS_PRN_INFO3("-------------------- s3fs_create");                              ///////
     WTF8_ENCODE(path)
     int result;
     struct fuse_context* pcxt;
@@ -2803,6 +2804,7 @@ static int s3fs_truncate(const char* _path, off_t size)
 
 static int s3fs_open(const char* _path, struct fuse_file_info* fi)
 {
+    S3FS_PRN_INFO3("------------ s3fs_open");                              ///////
     WTF8_ENCODE(path)
     int result;
     struct stat st;
@@ -2928,7 +2930,7 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
 {
     WTF8_ENCODE(path)
     ssize_t res;
-    S3FS_PRN_INFO3("s3fs_write");                              ///////
+    S3FS_PRN_INFO3("------------ s3fs_write");                              ///////
     FUSE_CTX_DBG("[path=%s][size=%zu][offset=%lld][pseudo_fd=%llu]", path, size, static_cast<long long int>(offset), (unsigned long long)(fi->fh));
 
     AutoFdEntity autoent;
