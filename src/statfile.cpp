@@ -21,33 +21,31 @@ void FileUploadStats::UpdateUploadSizeStats(long uploadSize) {
     totalUploadSize += uploadSize;
 }
 
-void FileUploadStats::UpdateDownloadStats(long downloadTime, long downloadSize) {
+void FileUploadStats::UpdateDownloadTimeStats(long downloadTime) {
     totalDownloadTime += downloadTime;
-    totalDownloadSize += downloadSize;
 }
 
-void FileUploadStats::PrintStats() {
-    std::cout << "Upload Stats: Count = " << uploadCount
-              << ", Total Time = " << totalUploadTime
-              << ", Total Size = " << totalUploadSize << std::endl;
-
-    std::cout << "Download Stats: Count = " << downloadCount
-              << ", Total Time = " << totalDownloadTime
-              << ", Total Size = " << totalDownloadSize << std::endl;
-              
+void FileUploadStats::UpdateDownloadSizeStats(long downloadSize) {
+    totalDownloadSize += downloadSize;
 }
 
 void FileUploadStats::PrintStatsToFile(const std::string& filename) {
     std::ofstream outfile(filename);  // 출력 파일 스트림 생성
 
     if (outfile.is_open()) {
+        // 업로드 관련 통계
         outfile << "Upload Stats: Count = " << uploadCount
-                << ", Total Time = " << totalUploadTime
-                << ", Total Size = " << totalUploadSize << std::endl;
+                << ", Total File Upload Time = " << totalUploadTime
+                << ", Total File Upload Size = " << totalUploadSize
+                << ", Average Upload Speed = " << (totalUploadTime > 0 ? totalUploadSize / totalUploadTime : 0) << " bytes per second"
+                << std::endl;
 
+        // 다운로드 관련 통계
         outfile << "Download Stats: Count = " << downloadCount
-                << ", Total Time = " << totalDownloadTime
-                << ", Total Size = " << totalDownloadSize << std::endl;
+                << ", Total File Download Time = " << totalDownloadTime
+                << ", Total File Download Size = " << totalDownloadSize
+                << ", Average Download Speed = " << (totalDownloadTime > 0 ? totalDownloadSize / totalDownloadTime : 0) << " bytes per second"
+                << std::endl;
 
         // 파일 닫기
         outfile.close();
@@ -55,8 +53,6 @@ void FileUploadStats::PrintStatsToFile(const std::string& filename) {
         std::cerr << "Unable to open file: " << filename << std::endl;
     }
 }
-
-// ...
 
 
 
@@ -78,12 +74,12 @@ void StatFile::UpdateUploadSizeStats(long uploadSize) {
     fileStats.UpdateUploadSizeStats(uploadSize);
 }
 
-void StatFile::UpdateDownloadStats(long downloadTime, long downloadSize) {
-    fileStats.UpdateDownloadStats(downloadTime, downloadSize);
+void StatFile::UpdateDownloadTimeStats(long downloadTime) {
+    fileStats.UpdateDownloadTimeStats(downloadTime);
 }
 
-void StatFile::PrintStats() {
-    fileStats.PrintStats();
+void StatFile::UpdateDownloadSizeStats(long downloadSize) {
+    fileStats.UpdateDownloadSizeStats(downloadSize);
 }
 
 void StatFile::PrintStatsToFile(const std::string& filename) {
