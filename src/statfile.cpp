@@ -1,5 +1,6 @@
 #include "statfile.h"
 #include <iostream>
+#include <fstream>
 
 FileUploadStats::FileUploadStats() : uploadCount(0), totalUploadTime(0), totalUploadSize(0), downloadCount(0), totalDownloadTime(0), totalDownloadSize(0) {}
 
@@ -32,7 +33,31 @@ void FileUploadStats::PrintStats() {
     std::cout << "Download Stats: Count = " << downloadCount
               << ", Total Time = " << totalDownloadTime
               << ", Total Size = " << totalDownloadSize << std::endl;
+              
 }
+
+void FileUploadStats::PrintStatsToFile(const std::string& filename) {
+    std::ofstream outfile(filename);  // 출력 파일 스트림 생성
+
+    if (outfile.is_open()) {
+        outfile << "Upload Stats: Count = " << uploadCount
+                << ", Total Time = " << totalUploadTime
+                << ", Total Size = " << totalUploadSize << std::endl;
+
+        outfile << "Download Stats: Count = " << downloadCount
+                << ", Total Time = " << totalDownloadTime
+                << ", Total Size = " << totalDownloadSize << std::endl;
+
+        // 파일 닫기
+        outfile.close();
+    } else {
+        std::cerr << "Unable to open file: " << filename << std::endl;
+    }
+}
+
+// ...
+
+
 
 FileUploadStats StatFile::fileStats;
 
@@ -58,4 +83,8 @@ void StatFile::UpdateDownloadStats(long downloadTime, long downloadSize) {
 
 void StatFile::PrintStats() {
     fileStats.PrintStats();
+}
+
+void StatFile::PrintStatsToFile(const std::string& filename) {
+    fileStats.PrintStatsToFile(filename);
 }
