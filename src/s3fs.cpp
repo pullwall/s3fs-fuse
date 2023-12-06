@@ -2928,7 +2928,7 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
 {
     WTF8_ENCODE(path)
     ssize_t res;
-
+    S3FS_PRN_INFO3("s3fs_write");                              ///////
     FUSE_CTX_DBG("[path=%s][size=%zu][offset=%lld][pseudo_fd=%llu]", path, size, static_cast<long long int>(offset), (unsigned long long)(fi->fh));
 
     AutoFdEntity autoent;
