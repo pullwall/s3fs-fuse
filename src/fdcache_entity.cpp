@@ -1474,9 +1474,21 @@ int FdEntity::RowFlush(int fd, const char* tpath, AutoLock::Type type, bool forc
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
     if(file_upload) {                                                                                  /////////////
         S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());  }                       /////////////
-    // Update statistics in StatFile								/////////////
-    StatFile& statFileInstance = StatFile::getInstance();					/////////////
-    statFileInstance.uploadFile(tpath);								/////////////
+    
+    long uploadTime =  duration.count() /* calculated upload time */;               /////////
+    //long uploadSize = /* calculated upload size */;
+    //long downloadTime = /* calculated download time */;
+    //long downloadSize = /* calculated download size */;
+
+     // Update stats
+    //StatFile::IncrementUploadCount();
+    StatFile::UpdateUploadTimeStats(uploadTime);                        ////////////
+
+    //StatFile::IncrementDownloadCount();
+    //StatFile::UpdateDownloadStats(downloadTime, downloadSize);
+
+    //StatFile::PrintStats();
+
 
     return result;
 }
