@@ -34,17 +34,21 @@ void FileUploadStats::PrintStatsToFile(const std::string& filename) {
 
     if (outfile.is_open()) {
         // 업로드 관련 통계
-        outfile << "Upload Stats: Count = " << uploadCount
-                << ", Total File Upload Time = " << totalUploadTime
-                << ", Total File Upload Size = " << totalUploadSize
-                << ", Average Upload Speed = " << (totalUploadTime > 0 ? totalUploadSize / totalUploadTime : 0) << " bytes per second"
+        outfile << "Upload Stats:\n"
+                << "  Count: " << uploadCount << "\n"
+                << "  Total Time: " << totalUploadTime << " milliseconds\n"
+                << "  Total Size: " << totalUploadSize << " bytes\n"
+                << "  Average Time: " << (uploadCount > 0 ? totalUploadTime / uploadCount : 0) << " milliseconds\n"
+                << "  Average Speed: " << (totalUploadTime > 0 ? totalUploadSize / totalUploadTime : 0) << " bytes per millisecond\n"
                 << std::endl;
 
         // 다운로드 관련 통계
-        outfile << "Download Stats: Count = " << downloadCount
-                << ", Total File Download Time = " << totalDownloadTime
-                << ", Total File Download Size = " << totalDownloadSize
-                << ", Average Download Speed = " << (totalDownloadTime > 0 ? totalDownloadSize / totalDownloadTime : 0) << " bytes per second"
+        outfile << "Download Stats:\n"
+                << "  Count: " << downloadCount << "\n"
+                << "  Total Time: " << totalDownloadTime << " milliseconds\n"
+                << "  Total Size: " << totalDownloadSize << " bytes\n"
+                << "  Average Time: " << (downloadCount > 0 ? totalDownloadTime / downloadCount : 0) << " milliseconds\n"
+                << "  Average Speed: " << (totalDownloadTime > 0 ? totalDownloadSize / totalDownloadTime : 0) << " bytes per millisecond\n"
                 << std::endl;
 
         // 파일 닫기
@@ -53,7 +57,6 @@ void FileUploadStats::PrintStatsToFile(const std::string& filename) {
         std::cerr << "Unable to open file: " << filename << std::endl;
     }
 }
-
 
 
 FileUploadStats StatFile::fileStats;
