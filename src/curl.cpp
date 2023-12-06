@@ -21,6 +21,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
 #include <errno.h>
 #include <memory>
 #include <unistd.h>
@@ -2447,6 +2448,8 @@ bool S3fsCurl::RemakeHandle()
 //
 int S3fsCurl::RequestPerform(bool dontAddAuthHeaders /*=false*/)
 {
+    auto start_time = std::chrono::high_resolution_clock::now();
+    
     if(S3fsLog::IsS3fsLogDbg()){
         char* ptr_url = nullptr;
         curl_easy_getinfo(hCurl, CURLINFO_EFFECTIVE_URL , &ptr_url);
@@ -2705,6 +2708,10 @@ int S3fsCurl::RequestPerform(bool dontAddAuthHeaders /*=false*/)
         S3FS_PRN_ERR("### giving up");
         result = -EIO;
     }
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+    S3FS_PRN_INFO3("File upload time: %lld milliseconds", duration.count());
+    
     return result;
 }
 
