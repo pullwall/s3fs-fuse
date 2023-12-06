@@ -29,7 +29,6 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <getopt.h>
-#include <chrono>               /////////
 
 #include "common.h"
 #include "s3fs.h"
@@ -2928,8 +2927,6 @@ static int s3fs_read(const char* _path, char* buf, size_t size, off_t offset, st
 
 static int s3fs_write(const char* _path, const char* buf, size_t size, off_t offset, struct fuse_file_info* fi)
 {
-    auto start_time = std::chrono::high_resolution_clock::now();            /////////////
-    bool file_upload = true;                                                /////////////
     WTF8_ENCODE(path)
     ssize_t res;
 
@@ -2939,20 +2936,17 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
     FdEntity*    ent;
     if(nullptr == (ent = autoent.GetExistFdEntity(path, static_cast<int>(fi->fh)))){
         S3FS_PRN_ERR("could not find opened pseudo_fd(%llu) for path(%s)", (unsigned long long)(fi->fh), path);
-        file_upload = false;                                                /////////////
         return -EIO;
     }
 
     if(0 > (res = ent->Write(static_cast<int>(fi->fh), buf, offset, size))){
         S3FS_PRN_WARN("failed to write file(%s). result=%zd", path, res);
-        file_upload = false;                                                /////////////
     }
 
     if(max_dirty_data != -1 && ent->BytesModified() >= max_dirty_data){
         int flushres;
         if(0 != (flushres = ent->RowFlush(static_cast<int>(fi->fh), path, AutoLock::NONE, true))){
             S3FS_PRN_ERR("could not upload file(%s): result=%d", path, flushres);
-            file_upload = false;                                                /////////////
             StatCache::getStatCacheData()->DelStat(path);
             return flushres;
         }
@@ -2961,11 +2955,6 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
             S3FS_PRN_WARN("could not punching HOLEs to a cache file, but continue.");
         }
     }
-    auto end_time = std::chrono::high_resolution_clock::now();                                          /////////////
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
-    S3FS_PRN_INFO3("test File upload time: %ld milliseconds", duration.count());                              ///////
-    if(file_upload) {                                                                                  /////////////
-        S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());  }                       /////////////
     return static_cast<int>(res);
 }
 
