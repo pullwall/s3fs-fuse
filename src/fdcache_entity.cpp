@@ -1121,7 +1121,7 @@ int FdEntity::Load(off_t start, off_t size, AutoLock::Type type, bool is_modifie
                 S3FS_PRN_INFO3("File download time: %ld milliseconds", duration.count()); }                        /////////////
         
             long downloadTime = duration.count() /* calculated download time */;                                                  /////////////
-            StatFile::UpdateDownloadStats(downloadTime);                                     /////////////
+            StatFile::UpdateDownloadTimeStats(downloadTime);                                     /////////////
 
           // Set loaded flag
           pagelist.SetPageLoadedStatus(iter->offset, iter->bytes, (is_modified_flag ? PageList::page_status::LOAD_MODIFIED : PageList::page_status::LOADED));
@@ -1480,7 +1480,7 @@ int FdEntity::RowFlush(int fd, const char* tpath, AutoLock::Type type, bool forc
     if(file_upload) {                                                                                  /////////////
         S3FS_PRN_INFO3("File upload time: %ld milliseconds", duration.count());  }                       /////////////
     
-    
+
     long uploadTime =  duration.count(); /* calculated upload time */
     StatFile::UpdateUploadTimeStats(uploadTime);
 
