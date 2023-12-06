@@ -38,8 +38,8 @@ void FileUploadStats::PrintStatsToFile(const std::string& filename) {
                 << "  Count: " << uploadCount << "\n"
                 << "  Total Time: " << totalUploadTime << " milliseconds\n"
                 << "  Total Size: " << totalUploadSize << " bytes\n"
-                << "  Average Time: " << (uploadCount > 0 ? totalUploadTime / uploadCount : 0) << " milliseconds\n"
-                << "  Average Speed: " << (totalUploadTime > 0 ? totalUploadSize / totalUploadTime : 0) << " bytes per millisecond\n"
+                << "  Average Time: " << (uploadCount > 0 ? totalUploadTime / uploadCount : 0) << " milliseconds per file\n"
+                << "  Average Speed : " << (totalUploadTime > 0 ? totalUploadSize / totalUploadTime * 1000 : 0) << " bytes per second\n"
                 << std::endl;
 
         // 다운로드 관련 통계
@@ -47,10 +47,9 @@ void FileUploadStats::PrintStatsToFile(const std::string& filename) {
                 << "  Count: " << downloadCount << "\n"
                 << "  Total Time: " << totalDownloadTime << " milliseconds\n"
                 << "  Total Size: " << totalDownloadSize << " bytes\n"
-                << "  Average Time: " << (downloadCount > 0 ? totalDownloadTime / downloadCount : 0) << " milliseconds\n"
-                << "  Average Speed: " << (totalDownloadTime > 0 ? totalDownloadSize / totalDownloadTime : 0) << " bytes per millisecond\n"
+                << "  Average Time: " << (downloadCount > 0 ? totalDownloadTime / downloadCount : 0) << " milliseconds per file\n"
+                << "  Average Speed : " << (totalDownloadTime > 0 ? totalDownloadSize / totalDownloadTime * 1000 : 0) << " bytes per second\n"
                 << std::endl;
-
         // 파일 닫기
         outfile.close();
     } else {
