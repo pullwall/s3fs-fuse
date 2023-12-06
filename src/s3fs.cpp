@@ -2927,6 +2927,7 @@ static int s3fs_read(const char* _path, char* buf, size_t size, off_t offset, st
 
     long downloadSize = size;/* calculated download size */
     StatFile::IncrementDownloadCount();
+    StatFile::UpdateDownloadSizeStats(downloadSize);
     StatFile::PrintStatsToFile("/stat.txt");
 
     return static_cast<int>(res);
@@ -2966,6 +2967,7 @@ static int s3fs_write(const char* _path, const char* buf, size_t size, off_t off
 
     long uploadSize = size;/* calculated upload size */
     StatFile::IncrementUploadCount();
+    StatFile::UpdateUploadSizeStats(uploadSize);
     StatFile::PrintStatsToFile("/stat.txt");
 
     return static_cast<int>(res);
