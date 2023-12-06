@@ -25,6 +25,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <sys/stat.h>
+#include <chrono>               /////////
 
 #include "common.h"
 #include "fdcache_entity.h"
@@ -1094,7 +1095,8 @@ int FdEntity::Load(off_t start, off_t size, AutoLock::Type type, bool is_modifie
                 // original file size(on S3) is smaller than request.
                 need_load_size = (iter->next() <= size_orgmeta ? iter->bytes : (size_orgmeta - iter->offset));
             }
-
+            auto start_time = std::chrono::high_resolution_clock::now();            /////////////
+            bool file_download = true;                                                /////////////
             // download
             if(S3fsCurl::GetMultipartSize() <= need_load_size && !nomultipart){
                 // parallel request
@@ -1107,10 +1109,15 @@ int FdEntity::Load(off_t start, off_t size, AutoLock::Type type, bool is_modifie
                 }else{
                     result = 0;
                 }
-          }
+        }
           if(0 != result){
+            file_download = true;                                                /////////////
               break;
-          }
+        }
+        auto end_time = std::chrono::high_resolution_clock::now();                                          /////////////
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);     /////////////
+        if(file_download) {                                                                                   /////////////
+            S3FS_PRN_INFO3("File download time: %ld milliseconds", duration.count()); }                        /////////////
           // Set loaded flag
           pagelist.SetPageLoadedStatus(iter->offset, iter->bytes, (is_modified_flag ? PageList::page_status::LOAD_MODIFIED : PageList::page_status::LOADED));
         }
